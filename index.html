@@ -3,1562 +3,1496 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Insignia - Premium Rewards Platform</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Insignia - Premium Rewards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     :root {
-        /* Ultra Modern Dark Theme */
-        --bg-primary: #0a0a0f;
-        --bg-secondary: #111118;
-        --bg-tertiary: #1a1a24;
-        --bg-card: rgba(20, 20, 30, 0.85);
-        --bg-card-hover: rgba(30, 30, 45, 0.9);
-        --bg-gradient: linear-gradient(145deg, #0a0a0f 0%, #151522 50%, #0d0d15 100%);
-        --bg-glass: rgba(30, 30, 40, 0.15);
-        
-        /* Accent Colors */
-        --accent-primary: #7877ff;
-        --accent-secondary: #ff77c6;
-        --accent-tertiary: #5eead4;
-        --accent-glow: 0 0 25px rgba(120, 119, 255, 0.5);
-        
-        /* Text Colors */
-        --text-primary: #ffffff;
-        --text-secondary: #b4b9d2;
-        --text-tertiary: #8a8fb5;
-        
-        /* UI Elements */
-        --border-radius: 16px;
-        --border-radius-sm: 10px;
-        --border-radius-lg: 24px;
-        --border: 1px solid rgba(255, 255, 255, 0.08);
-        --border-accent: 1px solid rgba(120, 119, 255, 0.3);
-        --shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.4);
-        --shadow-lg: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
-        --shadow-glow: 0 0 40px rgba(120, 119, 255, 0.25);
-        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        --backdrop-blur: blur(20px) saturate(180%);
+      /* Modern Gradient Theme */
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #818cf8;
+      --secondary: #f59e0b;
+      --accent: #10b981;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --dark-card: #1e293b;
+      --darker: #0a0f1c;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --gray-light: #cbd5e1;
+      --border: rgba(255, 255, 255, 0.1);
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+      --gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+      --gradient-dark: linear-gradient(135deg, #0f172a, #1e1b4b);
+      --radius: 16px;
+      --radius-sm: 8px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    * { 
-        margin: 0; 
-        padding: 0; 
-        box-sizing: border-box; 
-        font-family: 'Inter', sans-serif; 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body { 
-        background: var(--bg-gradient); 
-        color: var(--text-primary); 
-        min-height: 100vh; 
-        overflow-x: hidden;
-        line-height: 1.6;
-        font-weight: 400;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        position: relative;
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--gradient-dark);
+      color: var(--light);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+      position: relative;
     }
 
     body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: 
-            radial-gradient(circle at 20% 80%, rgba(120, 119, 255, 0.08) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.05) 0%, transparent 50%),
-            radial-gradient(circle at 40% 40%, rgba(94, 234, 212, 0.03) 0%, transparent 50%);
-        pointer-events: none;
-        z-index: -1;
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(219, 70, 239, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
     }
 
+    /* Utility Classes */
     .hidden { display: none !important; }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .justify-center { justify-content: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-4 { gap: 1rem; }
+    .gap-6 { gap: 1.5rem; }
+    .gap-8 { gap: 2rem; }
+    .p-4 { padding: 1rem; }
+    .p-6 { padding: 1.5rem; }
+    .p-8 { padding: 2rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .text-center { text-align: center; }
+    .text-sm { font-size: 0.875rem; }
+    .text-lg { font-size: 1.125rem; }
+    .text-xl { font-size: 1.25rem; }
+    .text-2xl { font-size: 1.5rem; }
+    .text-3xl { font-size: 1.875rem; }
+    .text-4xl { font-size: 2.25rem; }
+    .font-bold { font-weight: 700; }
+    .font-semibold { font-weight: 600; }
+    .w-full { width: 100%; }
+    .h-full { height: 100%; }
+    .relative { position: relative; }
+    .absolute { position: absolute; }
+
+    /* Container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
 
     /* Loading Screen */
-    #loadingScreen { 
-        text-align: center; 
-        background: var(--bg-card);
-        backdrop-filter: var(--backdrop-blur);
-        padding: 60px 40px;
-        border-radius: var(--border-radius-lg);
-        box-shadow: var(--shadow);
-        border: var(--border);
-        position: relative;
-        overflow: hidden;
-        width: 90%;
-        max-width: 500px;
-    }
-    
-    #loadingScreen::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
-        animation: loadingBar 2s ease-in-out infinite;
-    }
-    
-    @keyframes loadingBar {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
-    }
-    
-    #loadingScreen h2 { 
-        font-size: 2.5rem; 
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        -webkit-background-clip: text; 
-        background-clip: text;
-        color: transparent; 
-        margin-bottom: 1rem;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-    }
-    
-    #loadingScreen p {
-        color: var(--text-tertiary);
-        font-size: 1.1rem;
+    #loadingScreen {
+      position: fixed;
+      inset: 0;
+      background: var(--darker);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      backdrop-filter: blur(10px);
     }
 
-    /* Main Container */
-    .main-container {
-        width: 100%;
-        max-width: 1400px;
-        margin: 0 auto;
+    .loading-content {
+      text-align: center;
+      padding: 3rem;
+      background: rgba(30, 41, 59, 0.8);
+      border-radius: var(--radius);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
     }
 
-    /* Auth Container */
+    .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 3px solid rgba(99, 102, 241, 0.3);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1.5rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* App Container */
+    #app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Modern 9-Dot Navbar */
+    .navbar {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--gradient);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    /* 9-Dot Menu */
+    .menu-toggle {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      z-index: 1001;
+    }
+
+    .menu-toggle:hover {
+      background: rgba(99, 102, 241, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .dots-menu {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      width: 24px;
+      height: 24px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .menu-toggle.active .dots-menu {
+      display: none;
+    }
+
+    .menu-toggle.active::before {
+      content: '×';
+      font-size: 32px;
+      color: var(--primary-light);
+      line-height: 1;
+      margin-top: -4px;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 320px;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.98);
+      backdrop-filter: blur(30px);
+      border-left: 1px solid var(--border);
+      padding: 5rem 2rem 2rem;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+
+    .menu-item:hover {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.3);
+      transform: translateX(5px);
+    }
+
+    .menu-item.active {
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0.2), transparent);
+      border-color: var(--primary);
+      color: var(--primary-light);
+    }
+
+    .menu-item i {
+      width: 24px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    /* Desktop Nav */
+    .desktop-nav {
+      display: none;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 1024px) {
+      .desktop-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: none;
+      }
+    }
+
+    .nav-button {
+      padding: 0.75rem 1.5rem;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: var(--radius-sm);
+      color: var(--light);
+      font-weight: 500;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-button:hover {
+      background: rgba(99, 102, 241, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
+    }
+
+    .nav-button.primary {
+      background: var(--gradient);
+      border: none;
+      color: white;
+    }
+
+    /* Auth Screens */
     .auth-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2.5rem;
-        max-width: 1200px;
-        width: 100%;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
     }
 
     .auth-card {
-        background: var(--bg-card);
-        backdrop-filter: var(--backdrop-blur);
-        border-radius: var(--border-radius-lg);
-        padding: 3rem;
-        box-shadow: var(--shadow);
-        border: var(--border);
-        position: relative;
-        overflow: hidden;
-        transition: var(--transition);
+      width: 100%;
+      max-width: 440px;
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
     }
 
     .auth-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
-        background-size: 200% 100%;
-        animation: shimmer 3s ease-in-out infinite;
-    }
-    
-    .auth-card::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 20% 80%, rgba(120, 119, 255, 0.05) 0%, transparent 70%);
-        pointer-events: none;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
     }
 
-    @keyframes shimmer {
-        0%, 100% { background-position: -200% 0; }
-        50% { background-position: 200% 0; }
+    .auth-title {
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+      text-align: center;
     }
 
-    .auth-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-glow);
-        border: var(--border-accent);
+    .auth-subtitle {
+      color: var(--gray);
+      text-align: center;
+      margin-bottom: 2rem;
     }
 
-    .auth-card h1 {
-        font-size: 2.5rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        margin-bottom: 0.5rem;
-        text-align: center;
-        letter-spacing: -1px;
+    .input-group {
+      margin-bottom: 1.5rem;
     }
 
-    .auth-card p {
-        color: var(--text-tertiary);
-        margin-bottom: 2rem;
-        text-align: center;
-        font-size: 1.1rem;
-        font-weight: 400;
+    .input-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--gray-light);
+      font-weight: 500;
     }
 
-    .auth-input-group {
-        position: relative;
-        margin-bottom: 1.5rem;
+    .input-field {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--light);
+      font-size: 1rem;
+      transition: var(--transition);
+      outline: none;
     }
 
-    .auth-input {
-        width: 100%;
-        padding: 1.2rem 1.5rem;
-        background: rgba(15, 15, 25, 0.6);
-        border: var(--border);
-        border-radius: var(--border-radius-sm);
-        color: var(--text-primary);
-        font-size: 1rem;
-        transition: var(--transition);
-        outline: none;
-        font-weight: 400;
+    .input-field:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
     }
 
-    .auth-input:focus {
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 0 3px rgba(120, 119, 255, 0.15);
-        background: rgba(20, 20, 30, 0.8);
+    .input-field::placeholder {
+      color: var(--gray);
     }
 
-    .auth-input::placeholder {
-        color: var(--text-tertiary);
+    .btn {
+      padding: 1rem 2rem;
+      background: var(--gradient);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
     }
 
-    .auth-btn {
-        width: 100%;
-        padding: 1.3rem;
-        background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-        border: none;
-        border-radius: var(--border-radius-sm);
-        color: white;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition);
-        margin-bottom: 1.5rem;
-        position: relative;
-        overflow: hidden;
-        letter-spacing: 0.3px;
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
     }
 
-    .auth-btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-        transition: left 0.7s;
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
     }
 
-    .auth-btn:hover::before {
-        left: 100%;
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary-light);
     }
 
-    .auth-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-glow);
+    .auth-link {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: var(--gray);
     }
 
-    .auth-btn:disabled {
-        background: #4b5563;
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none !important;
+    .auth-link a {
+      color: var(--primary-light);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
     }
 
-    .auth-switch {
-        text-align: center;
-        color: var(--text-tertiary);
-        margin-top: 2rem;
-        font-size: 0.95rem;
-    }
-
-    .auth-switch a {
-        color: var(--accent-primary);
-        text-decoration: none;
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition);
-        position: relative;
-    }
-
-    .auth-switch a:hover {
-        color: var(--accent-secondary);
+    .auth-link a:hover {
+      text-decoration: underline;
     }
 
     /* Verification Code */
-    .verification-code {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        margin: 2rem 0;
+    .verification-container {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      margin: 2rem 0;
     }
 
     .code-input {
-        width: 60px;
-        height: 70px;
-        text-align: center;
-        font-size: 1.6rem;
-        font-weight: 700;
-        background: rgba(15, 15, 25, 0.6);
-        border: var(--border);
-        border-radius: var(--border-radius-sm);
-        color: var(--text-primary);
-        transition: var(--transition);
-        font-family: 'JetBrains Mono', monospace;
+      width: 50px;
+      height: 60px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: rgba(15, 23, 42, 0.6);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      color: var(--light);
+      transition: var(--transition);
     }
 
     .code-input:focus {
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 0 3px rgba(120, 119, 255, 0.15);
-        transform: scale(1.05);
-    }
-
-    /* Header */
-    #header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1.5rem 2rem;
-        background: var(--bg-card);
-        backdrop-filter: var(--backdrop-blur);
-        border-radius: var(--border-radius-lg);
-        margin: 1.5rem 0;
-        box-shadow: var(--shadow);
-        border: var(--border);
-        position: relative;
-        overflow: hidden;
-    }
-
-    #header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 30% 50%, rgba(120, 119, 255, 0.05) 0%, transparent 70%);
-        pointer-events: none;
-    }
-
-    #logo-img {
-        height: 45px;
-        border-radius: var(--border-radius-sm);
-        filter: brightness(1.1);
-    }
-
-    .header-buttons {
-        display: flex;
-        gap: 0.8rem;
-    }
-
-    #header button {
-        background: rgba(15, 15, 25, 0.6);
-        border: var(--border);
-        color: var(--text-primary);
-        padding: 0.8rem 1.5rem;
-        border-radius: var(--border-radius-sm);
-        cursor: pointer;
-        transition: var(--transition);
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.95rem;
-    }
-
-    #header button:hover {
-        background: var(--accent-primary);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-glow);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      transform: scale(1.05);
     }
 
     /* Dashboard */
-    .profile {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 2rem;
-        background: var(--bg-card);
-        backdrop-filter: var(--backdrop-blur);
-        padding: 2rem;
-        border-radius: var(--border-radius-lg);
-        margin: 1.5rem 0;
-        box-shadow: var(--shadow);
-        border: var(--border);
-        position: relative;
-        overflow: hidden;
+    .dashboard {
+      flex: 1;
+      padding: 2rem 1rem;
     }
 
-    .profile::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 20% 50%, rgba(120, 119, 255, 0.05) 0%, transparent 70%);
-        pointer-events: none;
+    /* Profile Header */
+    .profile-header {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
     }
 
     .avatar {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        font-weight: 700;
-        box-shadow: var(--shadow-glow);
-        position: relative;
-        z-index: 1;
+      width: 80px;
+      height: 80px;
+      background: var(--gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+    }
+
+    .user-info {
+      flex: 1;
+    }
+
+    .username {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
     }
 
     .user-status {
-        display: inline-block;
-        padding: 0.3rem 0.8rem;
-        border-radius: 50px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        margin-left: 0.5rem;
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        color: white;
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
     }
 
-    .balance-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-        margin-top: 1.5rem;
+    /* Balance Cards */
+    .balance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
 
-    .balance-item {
-        background: rgba(15, 15, 25, 0.6);
-        padding: 1.5rem;
-        border-radius: var(--border-radius-sm);
-        text-align: center;
-        border: var(--border);
-        transition: var(--transition);
-        position: relative;
-        overflow: hidden;
+    .balance-card {
+      background: rgba(30, 41, 59, 0.6);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
     }
 
-    .balance-item::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 50% 0%, rgba(120, 119, 255, 0.05) 0%, transparent 70%);
-        pointer-events: none;
+    .balance-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
     }
 
-    .balance-item:hover {
-        transform: translateY(-3px);
-        border: var(--border-accent);
-        box-shadow: var(--shadow-glow);
+    .balance-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
     }
 
     .balance-label {
-        font-size: 0.9rem;
-        color: var(--text-tertiary);
-        margin-bottom: 0.5rem;
-        font-weight: 500;
+      color: var(--gray);
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
     }
 
     .balance-value {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: var(--accent-primary);
-        font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--light);
     }
 
-    .nav {
-        display: flex;
-        background: var(--bg-card);
-        backdrop-filter: var(--backdrop-blur);
-        border-radius: var(--border-radius-lg);
-        overflow: hidden;
-        margin: 1.5rem 0;
-        box-shadow: var(--shadow);
-        border: var(--border);
-        position: relative;
+    .balance-value.primary {
+      color: var(--primary-light);
     }
 
-    .nav::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, rgba(120, 119, 255, 0.03) 0%, transparent 50%);
-        pointer-events: none;
+    .balance-value.success {
+      color: var(--accent);
     }
 
-    .nav button {
-        flex: 1;
-        padding: 1.2rem;
-        background: transparent;
-        border: none;
-        color: var(--text-tertiary);
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition);
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        font-size: 0.95rem;
+    /* Tabs Navigation */
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.5rem;
+      margin-bottom: 2rem;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
     }
 
-    .nav button i {
-        font-size: 1.1rem;
+    .tab-button {
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--gray);
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .nav button:hover, .nav button.active {
-        background: linear-gradient(135deg, rgba(120, 119, 255, 0.1), rgba(255, 119, 198, 0.05));
-        color: var(--text-primary);
+    .tab-button:hover {
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--light);
     }
 
-    .nav button.active::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 3px;
-        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    .tab-button.active {
+      background: var(--gradient);
+      color: white;
+      box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
     }
 
-    .page {
-        background: var(--bg-card);
-        backdrop-filter: var(--backdrop-blur);
-        border-radius: var(--border-radius-lg);
-        padding: 2rem;
-        margin: 1.5rem 0;
-        box-shadow: var(--shadow);
-        min-height: 500px;
-        border: var(--border);
-        position: relative;
-        overflow: hidden;
+    /* Content Pages */
+    .content-page {
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      min-height: 400px;
     }
 
-    .page::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 20% 80%, rgba(120, 119, 255, 0.03) 0%, transparent 70%);
-        pointer-events: none;
+    .page-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
 
-    .page h3 {
-        font-size: 1.8rem;
-        color: var(--text-primary);
-        margin-bottom: 1.5rem;
-        font-weight: 700;
-        position: relative;
-        display: inline-block;
-    }
-
-    .page h3::after {
-        content: '';
-        position: absolute;
-        bottom: -8px;
-        left: 0;
-        width: 40px;
-        height: 3px;
-        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-        border-radius: 2px;
+    .page-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+      margin-left: 1rem;
     }
 
     /* Work Page */
-    .work-info {
-        background: rgba(15, 15, 25, 0.6);
-        padding: 1.5rem;
-        border-radius: var(--border-radius);
-        margin-bottom: 1.5rem;
-        border-left: 4px solid var(--accent-primary);
-        border: var(--border);
+    .work-description {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--primary);
     }
 
-    .work-info h4 {
-        color: var(--accent-primary);
-        margin-bottom: 0.5rem;
-        font-size: 1.2rem;
-        font-weight: 600;
+    .work-textarea {
+      width: 100%;
+      min-height: 150px;
+      padding: 1rem;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--light);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      resize: vertical;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .work-textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
     }
 
     /* Offerwalls */
-    .offerwall-iframe {
-        width: 100%;
-        height: 600px;
-        border: none;
-        border-radius: var(--border-radius);
-        background: white;
+    .offerwall-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
     }
 
-    .offerwall-item {
-        background: linear-gradient(135deg, rgba(20, 20, 30, 0.9), rgba(30, 30, 45, 0.9));
-        backdrop-filter: var(--backdrop-blur);
-        border-radius: var(--border-radius-lg);
-        padding: 2rem;
-        margin: 1.5rem 0;
-        border: var(--border);
-        box-shadow: var(--shadow);
-        transition: var(--transition);
-        position: relative;
-        overflow: hidden;
+    .offerwall-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      transition: var(--transition);
     }
 
-    .offerwall-item::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 20% 80%, rgba(120, 119, 255, 0.05) 0%, transparent 70%);
-        pointer-events: none;
+    .offerwall-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
     }
 
-    .offerwall-item:hover {
-        transform: translateY(-5px);
-        border: var(--border-accent);
-        box-shadow: var(--shadow-glow);
+    .offerwall-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
     }
 
-    .offerwall-requirements {
-        background: rgba(15, 15, 25, 0.6);
-        padding: 1rem;
-        border-radius: var(--border-radius-sm);
-        margin: 1.5rem 0;
-        text-align: center;
-        border: var(--border);
+    .offerwall-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--gradient);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
     }
 
-    .offerwall-requirements.unlocked {
-        background: rgba(16, 185, 129, 0.15);
-        border: 1px solid #10b981;
+    .offerwall-status {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
     }
 
-    .offerwall-requirements.locked {
-        background: rgba(239, 68, 68, 0.15);
-        border: 1px solid #ef4444;
+    .offerwall-status.unlocked {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--accent);
     }
 
-    .offerwall-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        margin-top: 1.5rem;
+    .offerwall-status.locked {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--danger);
     }
 
-    .offerwall-buttons button {
-        padding: 1rem 2rem;
-        border: none;
-        border-radius: var(--border-radius-sm);
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.95rem;
-    }
-
-    .offerwall-buttons button:first-child {
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        color: white;
-    }
-
-    .offerwall-buttons button:last-child {
-        background: rgba(15, 15, 25, 0.6);
-        border: var(--border);
-        color: var(--text-primary);
-    }
-
-    .offerwall-buttons button:disabled {
-        background: #4b5563;
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none !important;
-    }
-
-    .offerwall-buttons button:hover:not(:disabled) {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-glow);
-    }
-
-    .iframe-container {
-        position: relative;
-        margin: 2rem 0;
-        border-radius: var(--border-radius);
-        overflow: hidden;
-        box-shadow: var(--shadow-lg);
-        border: var(--border);
-    }
-
-    .close-iframe {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-        z-index: 1000;
-        font-size: 1.2rem;
-        font-weight: bold;
-        box-shadow: var(--shadow);
-        transition: var(--transition);
-    }
-
-    .close-iframe:hover {
-        transform: scale(1.1);
-    }
-
-    /* Cashout Page */
-    .cashout-info {
-        background: rgba(15, 15, 25, 0.6);
-        padding: 1.5rem;
-        border-radius: var(--border-radius);
-        margin-bottom: 1.5rem;
-        border-left: 4px solid var(--accent-primary);
-        border: var(--border);
-    }
-
-    .cashout-info h4 {
-        color: var(--accent-primary);
-        margin-bottom: 0.5rem;
-        font-size: 1.2rem;
-        font-weight: 600;
-    }
-
-    .cashout-form {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    /* Cashout History */
-    .cashout-history {
-        margin-top: 2rem;
-        background: rgba(15, 15, 25, 0.6);
-        border-radius: var(--border-radius-lg);
-        padding: 2rem;
-        border: var(--border);
-    }
-
-    .cashout-item {
-        background: rgba(20, 20, 30, 0.6);
-        border-radius: var(--border-radius);
-        padding: 1.5rem;
-        margin: 1rem 0;
-        border-left: 4px solid var(--accent-primary);
-        border: var(--border);
-        transition: var(--transition);
-    }
-
-    .cashout-item:hover {
-        transform: translateX(5px);
-        border: var(--border-accent);
-    }
-
-    .cashout-status {
-        display: inline-block;
-        padding: 0.3rem 0.8rem;
-        border-radius: 50px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        margin-left: 0.5rem;
-    }
-
-    .status-pending {
-        background: #f59e0b;
-        color: black;
-    }
-
-    .status-approved {
-        background: #10b981;
-        color: white;
-    }
-
-    .status-rejected {
-        background: #ef4444;
-        color: white;
-    }
-
-    .admin-notes {
-        background: rgba(15, 15, 25, 0.6);
-        padding: 0.8rem;
-        border-radius: var(--border-radius-sm);
-        margin-top: 0.8rem;
-        font-size: 0.85rem;
-        color: var(--text-secondary);
-        border: var(--border);
-    }
-
-    /* Chat System */
-    #chatToggle {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        border: none;
-        border-radius: 50%;
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-        box-shadow: var(--shadow-glow);
-        z-index: 1000;
-        transition: var(--transition);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #chatToggle:hover {
-        transform: scale(1.1) rotate(10deg);
-    }
-
-    #chatBox {
-        position: fixed;
-        bottom: 100px;
-        right: 30px;
-        width: 350px;
-        height: 500px;
-        background: var(--bg-card);
-        backdrop-filter: var(--backdrop-blur);
-        border-radius: var(--border-radius-lg);
-        box-shadow: var(--shadow-lg);
-        border: var(--border);
-        display: flex;
-        flex-direction: column;
-        z-index: 999;
-        transition: var(--transition);
-    }
-
-    .chat-header {
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        padding: 1.2rem;
-        border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
-        font-weight: 700;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .chat-close {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1.3rem;
-        cursor: pointer;
-        transition: var(--transition);
-    }
-
-    .chat-close:hover {
-        transform: scale(1.1);
-    }
-
-    .chat-messages {
-        flex: 1;
-        padding: 1.2rem;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
-    }
-
-    .chat-message {
-        background: rgba(15, 15, 25, 0.6);
-        padding: 0.8rem 1rem;
-        border-radius: var(--border-radius);
-        max-width: 80%;
-        word-wrap: break-word;
-        border: var(--border);
-    }
-
-    .chat-message.own {
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        align-self: flex-end;
-    }
-
-    .chat-message.other {
-        background: rgba(20, 20, 30, 0.6);
-        align-self: flex-start;
-    }
-
-    .message-sender {
-        font-size: 0.8rem;
-        font-weight: 600;
-        margin-bottom: 0.3rem;
-        color: var(--accent-tertiary);
-    }
-
-    .chat-input-container {
-        padding: 1.2rem;
-        border-top: var(--border);
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .chat-input {
-        flex: 1;
-        padding: 0.8rem 1rem;
-        background: rgba(15, 15, 25, 0.6);
-        border: var(--border);
-        border-radius: var(--border-radius-sm);
-        color: var(--text-primary);
-        font-size: 0.9rem;
-        resize: none;
-        outline: none;
-        transition: var(--transition);
-    }
-
-    .chat-input:focus {
-        border-color: var(--accent-primary);
-    }
-
-    .chat-send {
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        border: none;
-        border-radius: var(--border-radius-sm);
-        color: white;
-        width: 45px;
-        cursor: pointer;
-        transition: var(--transition);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .chat-send:hover {
-        transform: scale(1.05);
-    }
-
-    /* Alert Modal */
-    #alertModal {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(10px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-    }
-
-    #alertModal .modal {
-        background: var(--bg-card);
-        backdrop-filter: var(--backdrop-blur);
-        padding: 2.5rem;
-        border-radius: var(--border-radius-lg);
-        max-width: 450px;
-        text-align: center;
-        box-shadow: var(--shadow-lg);
-        border: var(--border);
-        position: relative;
-        overflow: hidden;
-    }
-
-    #alertModal .modal::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-    }
-
-    #alertModal button {
-        margin-top: 1.5rem;
-        padding: 1rem 2.5rem;
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        border: none;
-        border-radius: var(--border-radius-sm);
-        color: white;
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition);
-    }
-
-    #alertModal button:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-glow);
-    }
-
-    /* Bonus Codes Styles */
-    .bonus-section {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .bonus-card {
-        background: linear-gradient(135deg, rgba(20, 20, 30, 0.9), rgba(30, 30, 45, 0.9));
-        backdrop-filter: var(--backdrop-blur);
-        border-radius: var(--border-radius-lg);
-        padding: 1.5rem;
-        border: var(--border);
-        box-shadow: var(--shadow);
-        transition: var(--transition);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .bonus-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 20% 80%, rgba(120, 119, 255, 0.05) 0%, transparent 70%);
-        pointer-events: none;
-    }
-
-    .bonus-card:hover {
-        transform: translateY(-3px);
-        border: var(--border-accent);
-        box-shadow: var(--shadow-glow);
-    }
-
-    .bonus-card h4 {
-        color: var(--accent-primary);
-        margin-bottom: 1rem;
-        font-size: 1.3rem;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+    /* Bonus Codes */
+    .bonus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     .bonus-input-group {
-        display: flex;
-        gap: 0.8rem;
-        margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .bonus-input {
-        flex: 1;
-        padding: 1rem 1.2rem;
-        background: rgba(15, 15, 25, 0.6);
-        border: var(--border);
-        border-radius: var(--border-radius-sm);
-        color: var(--text-primary);
-        font-size: 0.95rem;
-        transition: var(--transition);
-        outline: none;
-        font-weight: 400;
-    }
-
-    .bonus-input:focus {
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 0 3px rgba(120, 119, 255, 0.15);
-    }
-
-    .bonus-btn {
-        padding: 1rem 1.5rem;
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        border: none;
-        border-radius: var(--border-radius-sm);
-        color: white;
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition);
-        white-space: nowrap;
-        font-size: 0.95rem;
-    }
-
-    .bonus-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-glow);
-    }
-
-    .bonus-btn:disabled {
-        background: #4b5563;
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none !important;
+      flex: 1;
+      padding: 1rem;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--light);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .bonus-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
 
     .bonus-item {
-        background: rgba(15, 15, 25, 0.6);
-        padding: 1.2rem;
-        border-radius: var(--border-radius-sm);
-        border: var(--border);
-        transition: var(--transition);
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid var(--border);
+      transition: var(--transition);
     }
 
     .bonus-item:hover {
-        border: var(--border-accent);
-        transform: translateX(3px);
+      transform: translateX(5px);
+      border-color: var(--primary);
     }
 
     .bonus-code {
-        font-family: 'JetBrains Mono', monospace;
-        font-weight: 600;
-        color: var(--accent-primary);
-        font-size: 1rem;
-        margin-bottom: 0.3rem;
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      color: var(--primary-light);
+      font-size: 1.1rem;
     }
 
-    .bonus-details {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.85rem;
-        color: var(--text-secondary);
+    .bonus-reward {
+      color: var(--accent);
+      font-weight: 600;
     }
 
-    .bonus-points {
-        color: var(--accent-tertiary);
-        font-weight: 600;
+    /* Cashout */
+    .cashout-form {
+      max-width: 400px;
+      margin: 0 auto 2rem;
     }
 
-    .bonus-status {
-        display: inline-block;
-        padding: 0.2rem 0.6rem;
-        border-radius: 50px;
-        font-size: 0.75rem;
-        font-weight: 600;
+    .reward-select {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--light);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236366f1'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.5rem;
     }
 
-    .status-available {
-        background: #10b981;
-        color: white;
+    .cashout-history {
+      margin-top: 3rem;
     }
 
-    .status-used {
-        background: #f59e0b;
-        color: black;
+    .history-item {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid var(--primary);
+      transition: var(--transition);
     }
 
-    .status-expired {
-        background: #ef4444;
-        color: white;
+    .history-item:hover {
+      transform: translateX(5px);
     }
 
-    .bonus-history-item {
-        background: rgba(15, 15, 25, 0.6);
-        padding: 1rem;
-        border-radius: var(--border-radius-sm);
-        border: var(--border);
-        margin-bottom: 0.8rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .history-status {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
     }
 
-    .bonus-history-code {
-        font-family: 'JetBrains Mono', monospace;
-        font-weight: 600;
-        color: var(--accent-primary);
-        font-size: 0.95rem;
+    .status-pending { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+    .status-approved { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+    .status-rejected { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+    /* Chat System */
+    .chat-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      background: var(--gradient);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+      z-index: 990;
+      transition: var(--transition);
     }
 
-    .bonus-history-points {
-        color: var(--accent-tertiary);
-        font-weight: 600;
+    .chat-toggle:hover {
+      transform: scale(1.1) rotate(10deg);
     }
 
-    .bonus-history-date {
-        color: var(--text-tertiary);
-        font-size: 0.85rem;
+    .chat-box {
+      position: fixed;
+      bottom: 5rem;
+      right: 2rem;
+      width: 350px;
+      height: 500px;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      z-index: 989;
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
     }
 
-    .no-bonus {
-        text-align: center;
-        color: var(--text-tertiary);
-        padding: 1.5rem;
-        font-style: italic;
+    .chat-box.active {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
     }
 
-    /* Terms Page */
-    #termsContent {
-        text-align: left;
-        line-height: 1.7;
+    .chat-header {
+      padding: 1rem 1.5rem;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.1));
+      border-radius: var(--radius) var(--radius) 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    #termsContent h4 {
-        color: var(--accent-primary);
-        margin: 1.5rem 0 0.5rem;
-        font-size: 1.2rem;
+    .chat-close {
+      background: none;
+      border: none;
+      color: var(--gray);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+      width: 24px;
+      height: 24px;
     }
 
-    #termsContent p {
-        margin-bottom: 1rem;
-        color: var(--text-secondary);
+    .chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
 
-    #termsContent ul {
-        margin-left: 1.5rem;
-        margin-bottom: 1rem;
-        color: var(--text-secondary);
+    .chat-message {
+      max-width: 80%;
+      padding: 0.75rem 1rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
     }
 
-    #termsContent li {
-        margin-bottom: 0.5rem;
+    .chat-message.own {
+      background: var(--gradient);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chat-message.other {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid var(--border);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-input-container {
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--light);
+      font-size: 0.875rem;
+      outline: none;
+    }
+
+    .chat-send {
+      width: 44px;
+      height: 44px;
+      background: var(--gradient);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(30px);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+
+    .modal-message {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--light);
+      font-size: 1.1rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: rgba(15, 23, 42, 0.8);
+      border-top: 1px solid var(--border);
+      padding: 2rem 1rem;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--gray);
     }
 
     /* Responsive */
-    @media (max-width: 1200px) {
-        .auth-container {
-            grid-template-columns: 1fr;
-            max-width: 600px;
-        }
-        
-        .balance-container {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
     @media (max-width: 768px) {
-        body {
-            padding: 15px;
-        }
-        
-        .auth-card {
-            padding: 2rem;
-        }
-        
-        .auth-card h1 {
-            font-size: 2rem;
-        }
-        
-        .verification-code {
-            gap: 0.5rem;
-        }
-        
-        .code-input {
-            width: 50px;
-            height: 60px;
-            font-size: 1.4rem;
-        }
-
-        #chatBox {
-            width: 320px;
-            height: 450px;
-            right: 20px;
-            bottom: 90px;
-        }
-
-        .header-buttons {
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        #header button {
-            padding: 0.7rem 1rem;
-            font-size: 0.9rem;
-        }
-
-        .profile {
-            grid-template-columns: 1fr;
-            text-align: center;
-            gap: 1.5rem;
-        }
-
-        .avatar {
-            margin: 0 auto;
-        }
-
-        .balance-container {
-            grid-template-columns: 1fr;
-        }
-
-        .nav {
-            flex-wrap: wrap;
-        }
-
-        .nav button {
-            flex: 1 0 calc(50% - 10px);
-            min-width: 120px;
-        }
-
-        .page {
-            padding: 1.5rem;
-        }
-        
-        .offerwall-buttons {
-            flex-direction: column;
-        }
-        
-        #chatToggle {
-            width: 55px;
-            height: 55px;
-            font-size: 1.3rem;
-            bottom: 20px;
-            right: 20px;
-        }
-
-        .bonus-section {
-            grid-template-columns: 1fr;
-        }
-
-        .bonus-input-group {
-            flex-direction: column;
-        }
-
-        .bonus-history-item {
-            flex-direction: column;
-            gap: 0.5rem;
-            text-align: center;
-        }
+      .container {
+        padding: 0 0.75rem;
+      }
+      
+      .auth-card {
+        padding: 1.5rem;
+      }
+      
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .balance-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .offerwall-grid,
+      .bonus-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .bonus-input-group {
+        flex-direction: column;
+      }
+      
+      .chat-box {
+        width: calc(100% - 2rem);
+        right: 1rem;
+        bottom: 4rem;
+        height: 400px;
+      }
+      
+      .tabs {
+        padding: 0.25rem;
+        gap: 0.25rem;
+      }
+      
+      .tab-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+      }
+      
+      .verification-container {
+        gap: 0.5rem;
+      }
+      
+      .code-input {
+        width: 40px;
+        height: 50px;
+        font-size: 1.25rem;
+      }
     }
 
     @media (max-width: 480px) {
-        .nav button {
-            flex: 1 0 100%;
-        }
-        
-        .auth-card {
-            padding: 1.5rem;
-        }
-        
-        #header {
-            flex-direction: column;
-            gap: 1rem;
-            text-align: center;
-        }
-        
-        .header-buttons {
-            width: 100%;
-        }
-        
-        #header button {
-            width: 100%;
-            justify-content: center;
-        }
+      .content-page {
+        padding: 1.5rem;
+      }
+      
+      .auth-card {
+        padding: 1.25rem;
+      }
+      
+      .auth-title {
+        font-size: 1.75rem;
+      }
+      
+      .page-title {
+        font-size: 1.5rem;
+      }
+      
+      .balance-value {
+        font-size: 1.75rem;
+      }
+      
+      .mobile-menu {
+        width: 280px;
+        padding: 4rem 1.5rem 1.5rem;
+      }
+      
+      .chat-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+        bottom: 1rem;
+        right: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-
-  <!-- Loading -->
+  <!-- Loading Screen -->
   <div id="loadingScreen">
-    <h2>Loading Insignia</h2>
-    <p>Initializing premium experience...</p>
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <h2 class="text-2xl font-bold mb-2">Loading Insignia</h2>
+      <p class="text-gray">Initializing premium experience...</p>
+    </div>
   </div>
 
-  <!-- Main App -->
+  <!-- App Container -->
   <div id="app" class="hidden">
-    <div class="main-container">
-      <!-- Header -->
-      <header id="header">
-        <img id="logo-img" src="https://i.postimg.cc/k4pN532x/unnamed-removebg-preview.png" alt="Insignia Logo">
-        <div class="header-buttons">
-          <button onclick="toggleChat()"><i class="fas fa-comments"></i> Support</button>
-          <button onclick="showAlert('Support: premium@insignia.com')"><i class="fas fa-question-circle"></i> Help</button>
-          <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container nav-container">
+        <!-- Logo -->
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-crown"></i>
+          </div>
+          <span>Insignia</span>
         </div>
-      </header>
 
-      <!-- Auth Screens -->
-      <section id="authScreens">
-        <div class="auth-container">
-          <!-- Login Card -->
-          <div id="loginCard" class="auth-card">
-            <h1>Welcome Back</h1>
-            <p>Sign in to access your premium account</p>
-            <div class="auth-input-group">
-              <input type="text" id="loginUsername" class="auth-input" placeholder="Username" autocomplete="off">
-            </div>
-            <div class="auth-input-group">
-              <input type="password" id="loginPassword" class="auth-input" placeholder="Password" autocomplete="off">
-            </div>
-            <button class="auth-btn" onclick="login()">Access Account</button>
-            <div class="auth-switch">
-              New to Insignia? <a onclick="showSignup()">Create account</a>
-            </div>
+        <!-- Desktop Navigation -->
+        <div class="desktop-nav">
+          <a href="#" class="nav-button" onclick="showPage('work')">
+            <i class="fas fa-briefcase"></i>
+            Tasks
+          </a>
+          <a href="#" class="nav-button" onclick="showPage('offerwalls')">
+            <i class="fas fa-gem"></i>
+            Offerwalls
+          </a>
+          <a href="#" class="nav-button" onclick="showPage('bonus')">
+            <i class="fas fa-gift"></i>
+            Bonus
+          </a>
+          <a href="#" class="nav-button" onclick="showPage('cashout')">
+            <i class="fas fa-wallet"></i>
+            Cashout
+          </a>
+          <a href="#" class="nav-button" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </a>
+        </div>
+
+        <!-- 9-Dot Menu Toggle -->
+        <button class="menu-toggle" onclick="toggleMenu()">
+          <div class="dots-menu">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
           </div>
+        </button>
+      </div>
+    </nav>
 
-          <!-- Signup Card -->
-          <div id="signupCard" class="auth-card hidden">
-            <h1>Join Insignia</h1>
-            <p>Create your premium account today</p>
-            <div class="auth-input-group">
-              <input type="text" id="signupUsername" class="auth-input" placeholder="Choose Username" autocomplete="off">
-            </div>
-            <div class="auth-input-group">
-              <input type="email" id="signupEmail" class="auth-input" placeholder="Email Address" autocomplete="off">
-            </div>
-            <div class="auth-input-group">
-              <input type="password" id="signupPassword" class="auth-input" placeholder="Create Password" autocomplete="off">
-            </div>
-            <button class="auth-btn" onclick="signup()">Create Premium Account</button>
-            <div class="auth-switch">
-              Already have an account? <a onclick="showLogin()">Sign in</a>
-            </div>
+    <!-- Mobile Menu Overlay -->
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+      <a href="#" class="menu-item active" onclick="showPage('work'); toggleMenu()">
+        <i class="fas fa-briefcase"></i>
+        <span>Tasks</span>
+      </a>
+      <a href="#" class="menu-item" onclick="showPage('offerwalls'); toggleMenu()">
+        <i class="fas fa-gem"></i>
+        <span>Offerwalls</span>
+      </a>
+      <a href="#" class="menu-item" onclick="showPage('bonus'); toggleMenu()">
+        <i class="fas fa-gift"></i>
+        <span>Bonus Codes</span>
+      </a>
+      <a href="#" class="menu-item" onclick="showPage('cashout'); toggleMenu()">
+        <i class="fas fa-wallet"></i>
+        <span>Cashout</span>
+      </a>
+      <a href="#" class="menu-item" onclick="showPage('terms'); toggleMenu()">
+        <i class="fas fa-file-contract"></i>
+        <span>Terms</span>
+      </a>
+      <a href="#" class="menu-item" onclick="toggleChat(); toggleMenu()">
+        <i class="fas fa-comments"></i>
+        <span>Support</span>
+      </a>
+      <a href="#" class="menu-item" onclick="showAlert('Contact: support@insignia.com'); toggleMenu()">
+        <i class="fas fa-question-circle"></i>
+        <span>Help</span>
+      </a>
+      <a href="#" class="menu-item" onclick="logout(); toggleMenu()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+
+    <!-- Auth Screens -->
+    <div id="authScreens">
+      <div class="auth-container">
+        <!-- Login Card -->
+        <div id="loginCard" class="auth-card">
+          <h1 class="auth-title">Welcome Back</h1>
+          <p class="auth-subtitle">Sign in to access your premium account</p>
+          
+          <div class="input-group">
+            <label class="input-label">Username</label>
+            <input type="text" id="loginUsername" class="input-field" placeholder="Enter your username" autocomplete="off">
           </div>
-
-          <!-- Verification Card -->
-          <div id="verifyCard" class="auth-card hidden">
-            <h1>Verify Identity</h1>
-            <p>We sent a 6-digit code to your email</p>
-            <div class="verification-code">
-              <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 1)">
-              <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 2)">
-              <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 3)">
-              <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 4)">
-              <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 5)">
-              <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 6)">
-            </div>
-            <button class="auth-btn" onclick="verifyEmail()">Verify & Continue</button>
-            <div class="auth-switch">
-              Didn't receive code? <a onclick="resendCode()">Resend</a>
-            </div>
+          
+          <div class="input-group">
+            <label class="input-label">Password</label>
+            <input type="password" id="loginPassword" class="input-field" placeholder="Enter your password" autocomplete="off">
+          </div>
+          
+          <button class="btn" onclick="login()">
+            <i class="fas fa-sign-in-alt"></i>
+            Access Account
+          </button>
+          
+          <div class="auth-link">
+            New to Insignia? <a onclick="showSignup()">Create account</a>
           </div>
         </div>
-      </section>
 
-      <!-- Dashboard -->
-      <section id="dashboard" class="hidden">
-        <div class="profile">
+        <!-- Signup Card -->
+        <div id="signupCard" class="auth-card hidden">
+          <h1 class="auth-title">Join Insignia</h1>
+          <p class="auth-subtitle">Create your premium account today</p>
+          
+          <div class="input-group">
+            <label class="input-label">Username</label>
+            <input type="text" id="signupUsername" class="input-field" placeholder="Choose a username" autocomplete="off">
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">Email</label>
+            <input type="email" id="signupEmail" class="input-field" placeholder="Enter your email" autocomplete="off">
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">Password</label>
+            <input type="password" id="signupPassword" class="input-field" placeholder="Create a password" autocomplete="off">
+          </div>
+          
+          <button class="btn" onclick="signup()">
+            <i class="fas fa-user-plus"></i>
+            Create Account
+          </button>
+          
+          <div class="auth-link">
+            Already have an account? <a onclick="showLogin()">Sign in</a>
+          </div>
+        </div>
+
+        <!-- Verification Card -->
+        <div id="verifyCard" class="auth-card hidden">
+          <h1 class="auth-title">Verify Identity</h1>
+          <p class="auth-subtitle">Enter the 6-digit code sent to your email</p>
+          
+          <div class="verification-container">
+            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 1)">
+            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 2)">
+            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 3)">
+            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 4)">
+            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 5)">
+            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 6)">
+          </div>
+          
+          <button class="btn" onclick="verifyEmail()">
+            <i class="fas fa-check-circle"></i>
+            Verify & Continue
+          </button>
+          
+          <div class="auth-link">
+            Didn't receive code? <a onclick="resendCode()">Resend</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard hidden">
+      <div class="container">
+        <!-- Profile Header -->
+        <div class="profile-header">
           <div class="avatar" id="userAvatar">U</div>
-          <div>
-            <h2 id="displayUsername">User <span id="userStatus" class="user-status status-active">Premium</span></h2>
-            <div class="balance-container">
-              <div class="balance-item">
-                <div class="balance-label">Points Balance</div>
-                <div class="balance-value" id="balanceValue">0</div>
-              </div>
-              <div class="balance-item">
-                <div class="balance-label">USD Balance</div>
-                <div class="balance-value" id="usdBalanceValue">$0.0000</div>
-              </div>
-              <div class="balance-item">
-                <div class="balance-label">Bonus Points</div>
-                <div class="balance-value" id="bonusPointsValue">0</div>
-              </div>
-            </div>
+          <div class="user-info">
+            <h2 class="username" id="displayUsername">User</h2>
+            <span id="userStatus" class="user-status">Premium</span>
           </div>
         </div>
 
-        <nav class="nav">
-          <button onclick="showPage('work')" class="active"><i class="fas fa-briefcase"></i> Tasks</button>
-          <button onclick="showPage('offerwalls')"><i class="fas fa-gem"></i> Offerwalls</button>
-          <button onclick="showPage('bonus')"><i class="fas fa-gift"></i> Bonus Codes</button>
-          <button onclick="showPage('cashout')"><i class="fas fa-wallet"></i> Cashout</button>
-          <button onclick="showPage('terms')"><i class="fas fa-file-contract"></i> Terms</button>
-        </nav>
+        <!-- Balance Cards -->
+        <div class="balance-grid">
+          <div class="balance-card">
+            <div class="balance-label">Points Balance</div>
+            <div class="balance-value primary" id="balanceValue">0</div>
+          </div>
+          <div class="balance-card">
+            <div class="balance-label">USD Balance</div>
+            <div class="balance-value" id="usdBalanceValue">$0.0000</div>
+          </div>
+          <div class="balance-card">
+            <div class="balance-label">Bonus Points</div>
+            <div class="balance-value success" id="bonusPointsValue">0</div>
+          </div>
+        </div>
 
+        <!-- Tabs Navigation -->
+        <div class="tabs">
+          <button class="tab-button active" onclick="showPage('work')">
+            <i class="fas fa-briefcase"></i>
+            Tasks
+          </button>
+          <button class="tab-button" onclick="showPage('offerwalls')">
+            <i class="fas fa-gem"></i>
+            Offerwalls
+          </button>
+          <button class="tab-button" onclick="showPage('bonus')">
+            <i class="fas fa-gift"></i>
+            Bonus Codes
+          </button>
+          <button class="tab-button" onclick="showPage('cashout')">
+            <i class="fas fa-wallet"></i>
+            Cashout
+          </button>
+          <button class="tab-button" onclick="showPage('terms')">
+            <i class="fas fa-file-contract"></i>
+            Terms
+          </button>
+        </div>
+
+        <!-- Content Pages -->
         <div id="pages">
           <!-- Work Page -->
-          <div id="work" class="page">
-            <h3>Complete Tasks</h3>
-            <div class="work-info">
-              <h4>How it works</h4>
+          <div id="work" class="content-page">
+            <h2 class="page-title">
+              <i class="fas fa-briefcase"></i>
+              Complete Tasks
+            </h2>
+            
+            <div class="work-description">
+              <p><strong>How it works:</strong></p>
               <p>Each question you read and each answer you submit earns you rewards</p>
               <p>5 Points + $0.005 USD for each approved submission</p>
             </div>
-            <textarea id="workInput" class="auth-input" placeholder="Describe what questions you answered today..." style="height: 140px;"></textarea>
-            <button class="auth-btn" onclick="submitWork()"><i class="fas fa-paper-plane"></i> Submit Work</button>
+            
+            <textarea id="workInput" class="work-textarea" placeholder="Describe what questions you answered today..."></textarea>
+            
+            <button class="btn" onclick="submitWork()">
+              <i class="fas fa-paper-plane"></i>
+              Submit Work
+            </button>
           </div>
 
           <!-- Offerwalls Page -->
-          <div id="offerwalls" class="page hidden">
-            <h3>Offerwalls</h3>
-            <div id="offerwallList">
+          <div id="offerwalls" class="content-page hidden">
+            <h2 class="page-title">
+              <i class="fas fa-gem"></i>
+              Offerwalls
+            </h2>
+            
+            <div id="offerwallList" class="offerwall-grid">
               <p>Loading offerwalls...</p>
             </div>
-            <div id="iframeContainer" class="iframe-container hidden">
-              <button class="close-iframe" onclick="closeIframe()">×</button>
-              <iframe id="offerwallFrame" class="offerwall-iframe" src="about:blank"></iframe>
+            
+            <div id="iframeContainer" class="hidden">
+              <iframe id="offerwallFrame" class="w-full" style="height: 600px; border: none; border-radius: var(--radius);"></iframe>
             </div>
           </div>
 
           <!-- Bonus Codes Page -->
-          <div id="bonus" class="page hidden">
-            <h3>Bonus Codes</h3>
-            <p style="margin-bottom: 2rem; color: var(--text-secondary);">Redeem bonus codes for free points and boost your earnings!</p>
+          <div id="bonus" class="content-page hidden">
+            <h2 class="page-title">
+              <i class="fas fa-gift"></i>
+              Bonus Codes
+            </h2>
             
-            <div class="bonus-section">
-              <!-- Redeem Code Card -->
-              <div class="bonus-card">
-                <h4><i class="fas fa-ticket-alt"></i> Redeem Bonus Code</h4>
+            <div class="bonus-grid">
+              <div class="balance-card">
+                <h3 class="font-semibold mb-4">Redeem Code</h3>
                 <div class="bonus-input-group">
-                  <input type="text" id="bonusCodeInput" class="bonus-input" placeholder="Enter bonus code" maxlength="20">
-                  <button class="bonus-btn" onclick="redeemBonusCode()">Redeem</button>
+                  <input type="text" id="bonusCodeInput" class="bonus-input" placeholder="ENTER-CODE-HERE" maxlength="20">
+                  <button class="btn" onclick="redeemBonusCode()">
+                    <i class="fas fa-ticket-alt"></i>
+                    Redeem
+                  </button>
                 </div>
-                <p style="color: var(--text-tertiary); font-size: 0.9rem; margin-top: 1rem;">
-                  <i class="fas fa-info-circle"></i> Codes are case-insensitive
-                </p>
               </div>
-
-              <!-- Available Codes Card -->
-              <div class="bonus-card">
-                <h4><i class="fas fa-gift"></i> Available Codes</h4>
+              
+              <div class="balance-card">
+                <h3 class="font-semibold mb-4">Available Codes</h3>
                 <div id="availableBonusCodes" class="bonus-list">
-                  <p class="no-bonus">Loading available codes...</p>
+                  <p>Loading available codes...</p>
                 </div>
               </div>
             </div>
-
-            <!-- Bonus History -->
-            <div class="bonus-card">
-              <h4><i class="fas fa-history"></i> Redemption History</h4>
+            
+            <div class="balance-card">
+              <h3 class="font-semibold mb-4">Redemption History</h3>
               <div id="bonusHistory">
-                <p class="no-bonus">Loading redemption history...</p>
+                <p>Loading redemption history...</p>
               </div>
             </div>
           </div>
 
           <!-- Cashout Page -->
-          <div id="cashout" class="page hidden">
-            <h3>Request Cashout</h3>
-            <div class="cashout-info">
-              <h4>Cashout Information</h4>
+          <div id="cashout" class="content-page hidden">
+            <h2 class="page-title">
+              <i class="fas fa-wallet"></i>
+              Request Cashout
+            </h2>
+            
+            <div class="work-description">
+              <p><strong>Cashout Information:</strong></p>
               <p>1 USD = 1000 PTS</p>
-              <p>You only need USD balance to cash out</p>
+              <p>Minimum cashout: $5.00</p>
             </div>
+            
             <div class="cashout-form">
-              <select id="rewardSelect" class="auth-input">
-                <option value="">Choose reward...</option>
+              <select id="rewardSelect" class="reward-select">
+                <option value="">Select reward...</option>
               </select>
-              <button id="cashoutBtn" class="auth-btn" onclick="submitCashout()" disabled><i class="fas fa-coins"></i> Request Cashout</button>
+              
+              <button id="cashoutBtn" class="btn" onclick="submitCashout()" disabled>
+                <i class="fas fa-coins"></i>
+                Request Cashout
+              </button>
             </div>
-
-            <!-- Cashout History -->
+            
             <div class="cashout-history">
-              <h4>Cashout History</h4>
+              <h3 class="font-semibold mb-4">Cashout History</h3>
               <div id="cashoutHistory">
                 <p>Loading history...</p>
               </div>
@@ -1566,61 +1500,87 @@
           </div>
 
           <!-- Terms Page -->
-          <div id="terms" class="page hidden">
-            <div id="termsContent" style="text-align: left;"></div>
+          <div id="terms" class="content-page hidden">
+            <h2 class="page-title">
+              <i class="fas fa-file-contract"></i>
+              Terms & Conditions
+            </h2>
+            
+            <div id="termsContent">
+              <!-- Terms content will be loaded here -->
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p>© 2024 Insignia Premium Rewards. All rights reserved.</p>
+        <p class="text-sm mt-2">Product • Usecases • Resources • Company</p>
+      </div>
+    </footer>
   </div>
 
   <!-- Chat System -->
-  <button id="chatToggle" class="hidden"><i class="fas fa-comment-dots"></i></button>
-  <div id="chatBox" class="hidden">
+  <button id="chatToggle" class="chat-toggle hidden">
+    <i class="fas fa-comment-dots"></i>
+  </button>
+  
+  <div id="chatBox" class="chat-box">
     <div class="chat-header">
       <span><i class="fas fa-headset"></i> Premium Support</span>
       <button class="chat-close" onclick="toggleChat()">×</button>
     </div>
+    
     <div class="chat-messages" id="chatMessages">
       <div class="chat-message other">
-        <div class="message-sender">Insignia Support</div>
-        Welcome to Insignia Premium! How can we assist you today?
+        <strong>Insignia Support:</strong> Welcome to Insignia Premium! How can we assist you today?
       </div>
     </div>
+    
     <div class="chat-input-container">
       <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
-      <button class="chat-send" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+      <button class="chat-send" onclick="sendChatMessage()">
+        <i class="fas fa-paper-plane"></i>
+      </button>
     </div>
   </div>
 
-  <!-- Alert Modal -->
-  <div id="alertModal" class="hidden">
+  <!-- Modal -->
+  <div id="alertModal" class="modal-overlay">
     <div class="modal">
-      <p id="alertMessage">Message</p>
-      <button onclick="closeAlert()">Continue</button>
+      <p id="alertMessage" class="modal-message">Message</p>
+      <button class="btn" onclick="closeAlert()">Continue</button>
     </div>
   </div>
 
-  <!-- MAIN SCRIPT (EXACT SAME AS BEFORE - NO CHANGES) -->
+  <!-- JavaScript -->
   <script>
-    // ⚠️ REPLACE THIS WITH YOUR GOOGLE APPS SCRIPT DEPLOYMENT URL
+    // Redux-inspired state management
+    const state = {
+      user: null,
+      currentPage: 'work',
+      menuOpen: false,
+      chatOpen: false,
+      loading: false
+    };
+
+    // Google Apps Script URL
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTelvEYce1YEgw8-RDKth6xa_VJGRu2YOTxRMcgTGLuL6IXgO7tFG3xllYW4czAdbEEg/exec";
 
-    let currentUser = null;
-    let pendingUser = null;
-    let chatInterval = null;
-
-    // Initialize the app
+    // Initialize app
     async function init() {
       console.log('🚀 Initializing Insignia...');
       
       try {
-        // Test connection first
-        const testResponse = await fetch(SCRIPT_URL + '?action=test');
-        const testData = await testResponse.json();
+        // Test connection
+        const response = await fetch(SCRIPT_URL + '?action=test');
+        const data = await response.json();
         
-        if (testData.status === 'success') {
-          console.log('✅ Connection test successful');
+        if (data.status === 'success') {
+          console.log('✅ Connection successful');
           
           // Load configuration
           const configResponse = await fetch(SCRIPT_URL + '?action=getConfig');
@@ -1631,79 +1591,51 @@
           }
           
           // Show app
-          document.getElementById('loadingScreen').classList.add('hidden');
-          document.getElementById('app').classList.remove('hidden');
-          
-          // Try auto-login - FIXED: Using quizbux_user to match your backend
-          const saved = localStorage.getItem('quizbux_user');
-          if (saved) {
-            const userData = JSON.parse(saved);
-            await restoreSession(userData.username);
-          }
+          setTimeout(() => {
+            document.getElementById('loadingScreen').classList.add('hidden');
+            document.getElementById('app').classList.remove('hidden');
+            
+            // Try auto-login
+            const saved = localStorage.getItem('quizbux_user');
+            if (saved) {
+              const userData = JSON.parse(saved);
+              restoreSession(userData.username);
+            }
+          }, 1000);
           
         } else {
-          throw new Error('Connection test failed: ' + testData.message);
+          throw new Error('Connection failed');
         }
-        
       } catch (error) {
-        console.error('❌ Initialization failed:', error);
-        showAlert('Failed to connect to server. Please check your internet connection and try again.');
+        console.error('❌ Initialization error:', error);
         document.getElementById('loadingScreen').classList.add('hidden');
         document.getElementById('app').classList.remove('hidden');
+        showAlert('Connection error. Please check your internet.');
       }
     }
 
-    // Apply configuration from Google Sheets
     function applyConfig(config) {
-      console.log('Applying config:', config);
-      
-      // Update texts
-      if (config.texts) {
-        if (config.texts.welcome_message) {
-          document.querySelector('#loginCard p').textContent = config.texts.welcome_message;
-          document.querySelector('#signupCard p').textContent = config.texts.welcome_message;
-        }
-        
-        if (config.texts.terms) {
-          document.getElementById('termsContent').innerHTML = config.texts.terms;
-        }
+      if (config.texts && config.texts.terms) {
+        document.getElementById('termsContent').innerHTML = config.texts.terms;
       }
       
-      // Update app name
       if (config.app_name) {
-        document.title = config.app_name + ' - Premium Rewards';
+        document.title = config.app_name;
       }
       
-      // Update logo
       if (config.logo) {
-        document.getElementById('logo-img').src = config.logo;
+        document.querySelector('.logo-icon').innerHTML = `<img src="${config.logo}" alt="Logo" style="width: 24px; height: 24px;">`;
       }
       
-      // Update offers
+      // Load offers
       const select = document.getElementById('rewardSelect');
-      select.innerHTML = '<option value="">Choose reward...</option>';
-      
       if (config.offers && config.offers.length > 0) {
         config.offers.forEach(offer => {
           const option = document.createElement('option');
           option.value = offer.amount;
-          option.textContent = `${offer.name} ($${offer.amount.toFixed(2)})`;
+          option.textContent = `${offer.name} ($${offer.amount})`;
           select.appendChild(option);
         });
-      }
-      
-      // Apply custom styles
-      if (config.styles) {
-        const styleElement = document.createElement('style');
-        styleElement.textContent = config.styles;
-        document.head.appendChild(styleElement);
-      }
-      
-      // Apply custom scripts
-      if (config.scripts) {
-        const scriptElement = document.createElement('script');
-        scriptElement.textContent = config.scripts;
-        document.body.appendChild(scriptElement);
       }
     }
 
@@ -1763,7 +1695,7 @@
         const data = await response.json();
 
         if (data.status === 'success') {
-          pendingUser = { username, email, password };
+          state.pendingUser = { username, email, password };
           showVerification();
           showAlert('Verification code sent to your email!');
         } else {
@@ -1785,9 +1717,9 @@
 
       const formData = new FormData();
       formData.append('action', 'verifyEmail');
-      formData.append('username', pendingUser.username);
-      formData.append('email', pendingUser.email);
-      formData.append('password', pendingUser.password);
+      formData.append('username', state.pendingUser.username);
+      formData.append('email', state.pendingUser.email);
+      formData.append('password', state.pendingUser.password);
       formData.append('code', code);
 
       try {
@@ -1797,7 +1729,7 @@
         if (data.status === 'success') {
           showAlert('Account verified successfully! You can now login.');
           showLogin();
-          pendingUser = null;
+          state.pendingUser = null;
         } else {
           showAlert(data.message || 'Verification failed');
         }
@@ -1808,12 +1740,12 @@
     }
 
     async function resendCode() {
-      if (!pendingUser) return;
+      if (!state.pendingUser) return;
 
       const formData = new FormData();
       formData.append('action', 'resendCode');
-      formData.append('username', pendingUser.username);
-      formData.append('email', pendingUser.email);
+      formData.append('username', state.pendingUser.username);
+      formData.append('email', state.pendingUser.email);
 
       try {
         const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
@@ -1848,20 +1780,16 @@
         const data = await response.json();
 
         if (data.status === 'success') {
-          currentUser = data.user;
-          // FIXED: Using quizbux_user to match your backend
+          state.user = data.user;
           localStorage.setItem('quizbux_user', JSON.stringify({ username }));
           showDashboard();
-          loadOfferwalls();
-          loadCashoutHistory();
-          loadBonusCodes();
           showAlert('Login successful! Welcome to Insignia.');
         } else {
           showAlert(data.message || 'Login failed');
         }
       } catch (error) {
         console.error('Login error:', error);
-        showAlert('Network error. Please check your connection and try again.');
+        showAlert('Network error. Please try again.');
       }
     }
 
@@ -1871,18 +1799,13 @@
         const data = await response.json();
         
         if (data.status === 'success') {
-          currentUser = data.user;
+          state.user = data.user;
           showDashboard();
-          loadOfferwalls();
-          loadCashoutHistory();
-          loadBonusCodes();
         } else {
-          // FIXED: Using quizbux_user to match your backend
           localStorage.removeItem('quizbux_user');
         }
       } catch (error) {
         console.error('Restore session error:', error);
-        // FIXED: Using quizbux_user to match your backend
         localStorage.removeItem('quizbux_user');
       }
     }
@@ -1892,212 +1815,172 @@
       document.getElementById('dashboard').classList.remove('hidden');
       document.getElementById('chatToggle').classList.remove('hidden');
 
-      document.getElementById('displayUsername').textContent = currentUser.username;
-      document.getElementById('userAvatar').textContent = currentUser.username[0].toUpperCase();
-      document.getElementById('balanceValue').textContent = Number(currentUser.balance).toLocaleString();
-      document.getElementById('usdBalanceValue').textContent = '$' + Number(currentUser.balanceUSD).toFixed(4);
-      document.getElementById('bonusPointsValue').textContent = Number(currentUser.bonusPoints || 0).toLocaleString();
+      // Update user info
+      document.getElementById('displayUsername').textContent = state.user.username;
+      document.getElementById('userAvatar').textContent = state.user.username[0].toUpperCase();
+      document.getElementById('balanceValue').textContent = Number(state.user.balance).toLocaleString();
+      document.getElementById('usdBalanceValue').textContent = '$' + Number(state.user.balanceUSD).toFixed(4);
+      document.getElementById('bonusPointsValue').textContent = Number(state.user.bonusPoints || 0).toLocaleString();
 
-      // Update user status
-      const statusElement = document.getElementById('userStatus');
-      statusElement.textContent = currentUser.status || 'Premium';
-      statusElement.className = `user-status status-${(currentUser.status || 'active').toLowerCase()}`;
-
+      // Show work page
       showPage('work');
     }
 
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
+    function showPage(page) {
+      // Update state
+      state.currentPage = page;
       
-      // Update active nav button
-      document.querySelectorAll('.nav button').forEach(btn => btn.classList.remove('active'));
-      document.querySelector(`.nav button[onclick="showPage('${id}')"]`).classList.add('active');
+      // Hide all pages
+      document.querySelectorAll('.content-page').forEach(p => p.classList.add('hidden'));
       
-      if (id === 'offerwalls') loadOfferwalls();
-      if (id === 'cashout') loadCashoutHistory();
-      if (id === 'bonus') loadBonusCodes();
+      // Show selected page
+      document.getElementById(page).classList.remove('hidden');
+      
+      // Update active tab
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(btn => {
+        if (btn.onclick && btn.onclick.toString().includes(`'${page}'`)) {
+          btn.classList.add('active');
+        }
+      });
+      
+      // Load page-specific content
+      if (page === 'offerwalls') loadOfferwalls();
+      if (page === 'bonus') loadBonusCodes();
+      if (page === 'cashout') loadCashoutHistory();
     }
 
-    // NEW BONUS CODE FUNCTIONS
-    async function loadBonusCodes() {
-      if (!currentUser) return;
-      
-      try {
-        // Load available bonus codes
-        const availableResponse = await fetch(SCRIPT_URL + '?action=getBonusCodes&username=' + currentUser.username);
-        const availableData = await availableResponse.json();
-        
-        // Load bonus history
-        const historyResponse = await fetch(SCRIPT_URL + '?action=getUserBonusHistory&username=' + currentUser.username);
-        const historyData = await historyResponse.json();
-        
-        updateAvailableCodes(availableData);
-        updateBonusHistory(historyData);
-        
-      } catch (error) {
-        console.error('Load bonus codes error:', error);
-        document.getElementById('availableBonusCodes').innerHTML = '<p class="no-bonus">Error loading bonus codes</p>';
-        document.getElementById('bonusHistory').innerHTML = '<p class="no-bonus">Error loading history</p>';
+    function toggleMenu() {
+      state.menuOpen = !state.menuOpen;
+      document.querySelector('.menu-toggle').classList.toggle('active');
+      document.querySelector('.mobile-menu').classList.toggle('active');
+      document.querySelector('.menu-overlay').classList.toggle('active');
+    }
+
+    // Chat functions
+    function toggleChat() {
+      state.chatOpen = !state.chatOpen;
+      document.getElementById('chatBox').classList.toggle('active');
+    }
+
+    function handleChatInput(event) {
+      if (event.key === 'Enter') {
+        sendChatMessage();
       }
     }
 
-    function updateAvailableCodes(data) {
-      const container = document.getElementById('availableBonusCodes');
-      
-      if (data.status === 'success' && data.availableCodes && data.availableCodes.length > 0) {
-        container.innerHTML = data.availableCodes.map(code => `
-          <div class="bonus-item">
-            <div class="bonus-code">${code.code}</div>
-            <div class="bonus-details">
-              <span class="bonus-points">${code.points} Points</span>
-              <span class="bonus-status status-available">Available</span>
-            </div>
-            ${code.expiryDate ? `<div style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 0.5rem;">Expires: ${new Date(code.expiryDate).toLocaleDateString()}</div>` : ''}
-          </div>
-        `).join('');
-      } else {
-        container.innerHTML = '<p class="no-bonus">No available bonus codes at the moment</p>';
-      }
-    }
+    async function sendChatMessage() {
+      if (!state.user) return;
 
-    function updateBonusHistory(data) {
-      const container = document.getElementById('bonusHistory');
+      const input = document.getElementById('chatInput');
+      const message = input.value.trim();
       
-      if (data.status === 'success' && data.history && data.history.length > 0) {
-        container.innerHTML = data.history.map(item => `
-          <div class="bonus-history-item">
-            <div class="bonus-history-code">${item.code}</div>
-            <div class="bonus-history-points">+${item.points} Points</div>
-            <div class="bonus-history-date">${new Date(item.date).toLocaleDateString()}</div>
-          </div>
-        `).join('');
-      } else {
-        container.innerHTML = '<p class="no-bonus">No bonus codes redeemed yet</p>';
-      }
-    }
-
-    async function redeemBonusCode() {
-      if (!currentUser) return;
+      if (!message) return;
       
-      const bonusCode = document.getElementById('bonusCodeInput').value.trim();
-      if (!bonusCode) {
-        return showAlert('Please enter a bonus code');
-      }
-
       const formData = new FormData();
-      formData.append('action', 'redeemBonusCode');
-      formData.append('username', currentUser.username);
-      formData.append('bonusCode', bonusCode);
+      formData.append('action', 'sendChatMessage');
+      formData.append('username', state.user.username);
+      formData.append('message', message);
 
       try {
-        const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
-        const data = await response.json();
+        await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+        input.value = '';
+        loadChatMessages();
+      } catch (error) {
+        console.error('Chat error:', error);
+      }
+    }
 
+    async function loadChatMessages() {
+      if (!state.user) return;
+      
+      try {
+        const response = await fetch(SCRIPT_URL + '?action=getChatMessages');
+        const data = await response.json();
+        const container = document.getElementById('chatMessages');
+        
         if (data.status === 'success') {
-          showAlert(data.message);
-          document.getElementById('bonusCodeInput').value = '';
-          
-          // Update user data and refresh displays
-          if (data.userData) {
-            currentUser = data.userData;
-            document.getElementById('balanceValue').textContent = Number(currentUser.balance).toLocaleString();
-            document.getElementById('usdBalanceValue').textContent = '$' + Number(currentUser.balanceUSD).toFixed(4);
-            document.getElementById('bonusPointsValue').textContent = Number(currentUser.bonusPoints || 0).toLocaleString();
-          }
-          
-          // Reload bonus codes
-          loadBonusCodes();
-        } else {
-          showAlert(data.message || 'Failed to redeem bonus code');
+          container.innerHTML = data.messages.map(msg => `
+            <div class="chat-message ${msg.username === state.user.username ? 'own' : 'other'}">
+              <strong>${msg.username}:</strong> ${msg.message}
+            </div>
+          `).join('');
+          container.scrollTop = container.scrollHeight;
         }
       } catch (error) {
-        console.error('Redeem bonus code error:', error);
-        showAlert('Network error. Please try again.');
+        console.error('Load chat error:', error);
       }
     }
 
-    // Handle Enter key in bonus code input
-    document.getElementById('bonusCodeInput').addEventListener('keypress', function(event) {
-      if (event.key === 'Enter') {
-        redeemBonusCode();
-      }
-    });
-
+    // Offerwalls functions
     async function loadOfferwalls() {
-      if (!currentUser) return;
+      if (!state.user) return;
       
       try {
-        const response = await fetch(SCRIPT_URL + '?action=getOfferwalls&username=' + currentUser.username);
+        const response = await fetch(SCRIPT_URL + '?action=getOfferwalls&username=' + state.user.username);
         const data = await response.json();
         const container = document.getElementById('offerwallList');
         
         if (data.status === 'success' && data.offerwalls && data.offerwalls.length > 0) {
           container.innerHTML = data.offerwalls.map(wall => {
-            const hasEnoughPoints = currentUser.balance >= (wall.pointsRequired || 0);
+            const hasEnoughPoints = state.user.balance >= (wall.pointsRequired || 0);
             const isUnlocked = hasEnoughPoints && (wall.status === 'active');
             
             return `
-              <div class="offerwall-item">
-                <h4>${wall.name}</h4>
-                <p>Complete offers to earn rewards</p>
-                <div class="offerwall-requirements ${isUnlocked ? 'unlocked' : 'locked'}">
-                  ${isUnlocked ? 
-                    '✅ Unlocked - Ready to earn!' : 
-                    `🔒 Requires ${wall.pointsRequired || 0} points to unlock (You have ${currentUser.balance})`
-                  }
+              <div class="offerwall-card">
+                <div class="offerwall-header">
+                  <div class="offerwall-icon">
+                    <i class="fas fa-gem"></i>
+                  </div>
+                  <div style="flex: 1;">
+                    <h3 class="font-semibold">${wall.name}</h3>
+                    <p class="text-sm text-gray">Complete offers to earn rewards</p>
+                  </div>
+                  <span class="offerwall-status ${isUnlocked ? 'unlocked' : 'locked'}">
+                    ${isUnlocked ? 'Unlocked' : 'Locked'}
+                  </span>
                 </div>
-                <div class="offerwall-buttons">
-                  <button onclick="openOfferwallInIframe('${wall.id}', '${wall.url}')" 
+                <div class="flex gap-2">
+                  <button class="btn ${!isUnlocked ? 'btn-outline' : ''}" 
+                          onclick="${isUnlocked ? `openOfferwall('${wall.id}', '${wall.url}')` : ''}" 
                           ${!isUnlocked ? 'disabled' : ''}>
-                    <i class="fas fa-play-circle"></i> Start Earning
+                    <i class="fas fa-play"></i>
+                    Start Earning
                   </button>
-                  <button onclick="window.open('${wall.url}', '_blank')" 
+                  <button class="btn btn-outline" 
+                          onclick="window.open('${wall.url}', '_blank')" 
                           ${!isUnlocked ? 'disabled' : ''}>
-                    <i class="fas fa-external-link-alt"></i> Open Externally
+                    <i class="fas fa-external-link-alt"></i>
                   </button>
                 </div>
               </div>
             `;
           }).join('');
         } else {
-          container.innerHTML = '<p>No active offerwalls right now</p>';
+          container.innerHTML = '<p>No active offerwalls at the moment</p>';
         }
       } catch (error) {
         console.error('Load offerwalls error:', error);
-        document.getElementById('offerwallList').innerHTML = '<p>Error loading offerwalls</p>';
+        container.innerHTML = '<p>Error loading offerwalls</p>';
       }
     }
 
-    function openOfferwallInIframe(offerwallId, url) {
-      const iframe = document.getElementById('offerwallFrame');
-      const iframeContainer = document.getElementById('iframeContainer');
-      const offerwallList = document.getElementById('offerwallList');
-      
-      iframe.src = url;
-      iframeContainer.classList.remove('hidden');
-      offerwallList.classList.add('hidden');
+    function openOfferwall(id, url) {
+      document.getElementById('offerwallList').classList.add('hidden');
+      document.getElementById('iframeContainer').classList.remove('hidden');
+      document.getElementById('offerwallFrame').src = url;
     }
 
-    function closeIframe() {
-      const iframeContainer = document.getElementById('iframeContainer');
-      const offerwallList = document.getElementById('offerwallList');
-      const iframe = document.getElementById('offerwallFrame');
-      
-      iframeContainer.classList.add('hidden');
-      offerwallList.classList.remove('hidden');
-      iframe.src = 'about:blank';
-    }
-
+    // Work submission
     async function submitWork() {
-      if (!currentUser) return;
+      if (!state.user) return;
 
       const text = document.getElementById('workInput').value.trim();
       if (!text) return showAlert('Please describe the questions you answered');
 
       const formData = new FormData();
       formData.append('action', 'submitWork');
-      formData.append('username', currentUser.username);
+      formData.append('username', state.user.username);
       formData.append('submission', text);
 
       try {
@@ -2111,8 +1994,13 @@
       }
     }
 
+    // Cashout functions
+    document.getElementById('rewardSelect').onchange = function() {
+      document.getElementById('cashoutBtn').disabled = !this.value;
+    };
+
     async function submitCashout() {
-      if (!currentUser) return;
+      if (!state.user) return;
 
       const amount = document.getElementById('rewardSelect').value;
       if (!amount) return showAlert('Please select a reward');
@@ -2121,7 +2009,7 @@
 
       const formData = new FormData();
       formData.append('action', 'submitCashout');
-      formData.append('username', currentUser.username);
+      formData.append('username', state.user.username);
       formData.append('reward', reward);
       formData.append('amount', amount);
 
@@ -2134,144 +2022,153 @@
         document.getElementById('cashoutBtn').disabled = true;
         loadCashoutHistory();
       } catch (error) {
-        console.error('Submit cashout error:', error);
+        console.error('Cashout error:', error);
         showAlert('Network error. Please try again.');
       }
     }
 
     async function loadCashoutHistory() {
-      if (!currentUser) return;
+      if (!state.user) return;
       
       try {
-        const response = await fetch(SCRIPT_URL + '?action=getCashoutHistory&username=' + currentUser.username);
+        const response = await fetch(SCRIPT_URL + '?action=getCashoutHistory&username=' + state.user.username);
         const data = await response.json();
         const container = document.getElementById('cashoutHistory');
         
         if (data.status === 'success' && data.history && data.history.length > 0) {
           container.innerHTML = data.history.map(item => `
-            <div class="cashout-item">
-              <strong>${item.reward}</strong> - $${item.amount} 
-              <span class="cashout-status status-${item.status.toLowerCase()}">${item.status}</span>
-              <div style="font-size: 0.9rem; color: var(--text-tertiary); margin-top: 0.5rem;">
-                ${new Date(item.date).toLocaleDateString()}
-              </div>
-              ${item.adminNotes ? `
-                <div class="admin-notes">
-                  <strong>Admin Notes:</strong> ${item.adminNotes}
+            <div class="history-item">
+              <div class="flex justify-between items-center">
+                <div>
+                  <strong>${item.reward}</strong>
+                  <span class="text-sm text-gray"> - $${item.amount}</span>
                 </div>
-              ` : ''}
+                <span class="history-status status-${item.status.toLowerCase()}">${item.status}</span>
+              </div>
+              <div class="text-sm text-gray mt-2">
+                ${new Date(item.date).toLocaleDateString()}
+                ${item.adminNotes ? `<div class="mt-1"><strong>Note:</strong> ${item.adminNotes}</div>` : ''}
+              </div>
             </div>
           `).join('');
         } else {
           container.innerHTML = '<p>No cashout history yet.</p>';
         }
       } catch (error) {
-        console.error('Load cashout history error:', error);
-        document.getElementById('cashoutHistory').innerHTML = '<p>Error loading history</p>';
+        console.error('Load history error:', error);
+        container.innerHTML = '<p>Error loading history</p>';
       }
     }
 
-    // Chat system
-    function toggleChat() {
-      const chatBox = document.getElementById('chatBox');
-      const chatToggle = document.getElementById('chatToggle');
-      
-      if (chatBox.classList.contains('hidden')) {
-        chatBox.classList.remove('hidden');
-        chatToggle.innerHTML = '<i class="fas fa-times"></i>';
-        loadChatMessages();
-        startChatPolling();
-      } else {
-        chatBox.classList.add('hidden');
-        chatToggle.innerHTML = '<i class="fas fa-comment-dots"></i>';
-        stopChatPolling();
-      }
-    }
-
-    function handleChatInput(event) {
-      if (event.key === 'Enter') {
-        sendChatMessage();
-      }
-    }
-
-    async function sendChatMessage() {
-      if (!currentUser) return;
-
-      const input = document.getElementById('chatInput');
-      const message = input.value.trim();
-      
-      if (!message) return;
-      
-      const formData = new FormData();
-      formData.append('action', 'sendChatMessage');
-      formData.append('username', currentUser.username);
-      formData.append('message', message);
-
-      try {
-        await fetch(SCRIPT_URL, { method: 'POST', body: formData });
-        input.value = '';
-        loadChatMessages();
-      } catch (error) {
-        console.error('Send chat message error:', error);
-        showAlert('Failed to send message');
-      }
-    }
-
-    async function loadChatMessages() {
-      if (!currentUser) return;
+    // Bonus codes functions
+    async function loadBonusCodes() {
+      if (!state.user) return;
       
       try {
-        const response = await fetch(SCRIPT_URL + '?action=getChatMessages');
-        const data = await response.json();
-        const container = document.getElementById('chatMessages');
+        // Load available codes
+        const availableResponse = await fetch(SCRIPT_URL + '?action=getBonusCodes&username=' + state.user.username);
+        const availableData = await availableResponse.json();
         
+        // Load history
+        const historyResponse = await fetch(SCRIPT_URL + '?action=getUserBonusHistory&username=' + state.user.username);
+        const historyData = await historyResponse.json();
+        
+        updateAvailableCodes(availableData);
+        updateBonusHistory(historyData);
+        
+      } catch (error) {
+        console.error('Load bonus codes error:', error);
+      }
+    }
+
+    function updateAvailableCodes(data) {
+      const container = document.getElementById('availableBonusCodes');
+      
+      if (data.status === 'success' && data.availableCodes && data.availableCodes.length > 0) {
+        container.innerHTML = data.availableCodes.map(code => `
+          <div class="bonus-item">
+            <div class="bonus-code">${code.code}</div>
+            <div class="bonus-reward">+${code.points} Points</div>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = '<p>No available bonus codes</p>';
+      }
+    }
+
+    function updateBonusHistory(data) {
+      const container = document.getElementById('bonusHistory');
+      
+      if (data.status === 'success' && data.history && data.history.length > 0) {
+        container.innerHTML = data.history.map(item => `
+          <div class="bonus-item">
+            <div class="bonus-code">${item.code}</div>
+            <div class="bonus-reward">+${item.points} Points</div>
+            <div class="text-sm text-gray">${new Date(item.date).toLocaleDateString()}</div>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = '<p>No bonus codes redeemed yet</p>';
+      }
+    }
+
+    async function redeemBonusCode() {
+      if (!state.user) return;
+      
+      const bonusCode = document.getElementById('bonusCodeInput').value.trim();
+      if (!bonusCode) {
+        return showAlert('Please enter a bonus code');
+      }
+
+      const formData = new FormData();
+      formData.append('action', 'redeemBonusCode');
+      formData.append('username', state.user.username);
+      formData.append('bonusCode', bonusCode);
+
+      try {
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+        const data = await response.json();
+
         if (data.status === 'success') {
-          container.innerHTML = data.messages.map(msg => `
-            <div class="chat-message ${msg.username === currentUser.username ? 'own' : 'other'}">
-              <div class="message-sender">${msg.username}</div>
-              ${msg.message}
-            </div>
-          `).join('');
-          container.scrollTop = container.scrollHeight;
+          showAlert(data.message);
+          document.getElementById('bonusCodeInput').value = '';
+          
+          // Update user data
+          if (data.userData) {
+            state.user = data.userData;
+            document.getElementById('balanceValue').textContent = Number(state.user.balance).toLocaleString();
+            document.getElementById('usdBalanceValue').textContent = '$' + Number(state.user.balanceUSD).toFixed(4);
+            document.getElementById('bonusPointsValue').textContent = Number(state.user.bonusPoints || 0).toLocaleString();
+          }
+          
+          // Reload bonus codes
+          loadBonusCodes();
+        } else {
+          showAlert(data.message || 'Failed to redeem bonus code');
         }
       } catch (error) {
-        console.error('Load chat messages error:', error);
+        console.error('Redeem bonus error:', error);
+        showAlert('Network error. Please try again.');
       }
     }
 
-    function startChatPolling() {
-      chatInterval = setInterval(loadChatMessages, 3000);
-    }
-
-    function stopChatPolling() {
-      if (chatInterval) {
-        clearInterval(chatInterval);
-        chatInterval = null;
-      }
-    }
-
-    function logout() {
-      // FIXED: Using quizbux_user to match your backend
-      localStorage.removeItem('quizbux_user');
-      if (chatInterval) clearInterval(chatInterval);
-      location.reload();
-    }
-
+    // Alert modal
     function showAlert(msg) {
       document.getElementById('alertMessage').textContent = msg;
-      document.getElementById('alertModal').classList.remove('hidden');
+      document.getElementById('alertModal').classList.add('active');
     }
 
     function closeAlert() {
-      document.getElementById('alertModal').classList.add('hidden');
+      document.getElementById('alertModal').classList.remove('active');
     }
 
-    // Initialize cashout button
-    document.getElementById('rewardSelect').onchange = function() {
-      document.getElementById('cashoutBtn').disabled = !this.value;
-    };
+    function logout() {
+      localStorage.removeItem('quizbux_user');
+      state.user = null;
+      location.reload();
+    }
 
-    // Start the app
+    // Initialize
     window.onload = init;
   </script>
 </body>
