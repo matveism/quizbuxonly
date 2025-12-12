@@ -6,7 +6,7 @@
   <title>Insignia - Premium Rewards</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
+  <style>
     :root {
       --primary: #6366f1;
       --primary-dark: #4f46e5;
@@ -1086,6 +1086,34 @@
       color: var(--gray);
     }
 
+    /* Screen Sharing Styles */
+    .screen-share-container {
+      background: rgba(10, 15, 28, 0.7);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+    }
+
+    .screen-preview {
+      width: 100%;
+      height: 200px;
+      background: #000;
+      border-radius: var(--radius-sm);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray);
+    }
+
+    .screen-preview video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+    }
+
     @media (max-width: 768px) {
       .nav-container {
         width: 92%;
@@ -1233,6 +1261,10 @@
             <i class="fas fa-wallet"></i>
             Cashout
           </button>
+          <button class="nav-button" onclick="startScreenShare()" id="screenShareBtn">
+            <i class="fas fa-desktop"></i>
+            Screen Share
+          </button>
           <button class="nav-button" onclick="logout()">
             <i class="fas fa-sign-out-alt"></i>
             Logout
@@ -1277,6 +1309,10 @@
         <i class="fas fa-wallet"></i>
         <span>Cashout</span>
       </button>
+      <button class="menu-item" onclick="startScreenShare(); toggleMenu()">
+        <i class="fas fa-desktop"></i>
+        <span>Screen Share</span>
+      </button>
       <button class="menu-item" onclick="showPage('terms'); toggleMenu()">
         <i class="fas fa-file-contract"></i>
         <span>Terms</span>
@@ -1313,7 +1349,7 @@
             <input type="password" id="loginPassword" class="input-field" placeholder="Enter your password" autocomplete="off">
           </div>
           
-          <button class="btn" onclick="login()">
+          <button class="btn" onclick="login()" id="loginBtn">
             <i class="fas fa-sign-in-alt"></i>
             Access Account
           </button>
@@ -1343,7 +1379,7 @@
             <input type="password" id="signupPassword" class="input-field" placeholder="Create a password" autocomplete="off">
           </div>
           
-          <button class="btn" onclick="signup()">
+          <button class="btn" onclick="signup()" id="signupBtn">
             <i class="fas fa-user-plus"></i>
             Create Account
           </button>
@@ -1367,7 +1403,7 @@
             <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 5)">
           </div>
           
-          <button class="btn" onclick="verifyEmail()">
+          <button class="btn" onclick="verifyEmail()" id="verifyBtn">
             <i class="fas fa-check-circle"></i>
             Verify & Continue
           </button>
@@ -1425,9 +1461,9 @@
             <i class="fas fa-wallet"></i>
             Cashout
           </button>
-          <button class="tab-button" onclick="showPage('terms')">
-            <i class="fas fa-file-contract"></i>
-            Terms
+          <button class="tab-button" onclick="startScreenShare()">
+            <i class="fas fa-desktop"></i>
+            Screen Share
           </button>
         </div>
 
@@ -1444,14 +1480,21 @@
               <p><strong>How it works:</strong></p>
               <p>Each question you read and each answer you submit earns you rewards</p>
               <p>5 Points + $0.005 USD for each approved submission</p>
+              <p>You can also use Screen Share for additional rewards</p>
             </div>
             
             <textarea id="workInput" class="work-textarea" placeholder="Describe what questions you answered today..."></textarea>
             
-            <button class="btn" onclick="submitWork()">
-              <i class="fas fa-paper-plane"></i>
-              Submit Work
-            </button>
+            <div class="flex gap-4">
+              <button class="btn" onclick="submitWork()" id="submitWorkBtn">
+                <i class="fas fa-paper-plane"></i>
+                Submit Work
+              </button>
+              <button class="btn btn-outline" onclick="startScreenShare()">
+                <i class="fas fa-desktop"></i>
+                Start Screen Share
+              </button>
+            </div>
           </div>
 
           <!-- Offerwalls Page -->
@@ -1486,7 +1529,7 @@
                 <h3 class="font-semibold mb-4">Redeem Code</h3>
                 <div class="bonus-input-group">
                   <input type="text" id="bonusCodeInput" class="bonus-input" placeholder="ENTER-CODE-HERE" maxlength="20">
-                  <button class="btn" onclick="redeemBonusCode()">
+                  <button class="btn" onclick="redeemBonusCode()" id="redeemBonusBtn">
                     <i class="fas fa-ticket-alt"></i>
                     Redeem
                   </button>
@@ -1520,11 +1563,17 @@
               <p><strong>Cashout Information:</strong></p>
               <p>1 USD = 1000 PTS</p>
               <p>Minimum cashout: $5.00</p>
+              <p>Processing time: 3-7 business days</p>
             </div>
             
             <div class="cashout-form">
               <select id="rewardSelect" class="reward-select">
                 <option value="">Select reward...</option>
+                <option value="5">$5.00 USD (PayPal)</option>
+                <option value="10">$10.00 USD (PayPal)</option>
+                <option value="20">$20.00 USD (PayPal)</option>
+                <option value="50">$50.00 USD (PayPal)</option>
+                <option value="100">$100.00 USD (PayPal)</option>
               </select>
               
               <button id="cashoutBtn" class="btn" onclick="submitCashout()" disabled>
@@ -1558,6 +1607,8 @@
                 <li>Rewards are subject to approval</li>
                 <li>Minimum cashout: $5.00 USD</li>
                 <li>Processing time: 3-7 business days</li>
+                <li>Screen sharing is optional and only for verification purposes</li>
+                <li>We never access your personal files during screen sharing</li>
               </ul>
             </div>
           </div>
@@ -1608,11 +1659,14 @@
   </div>
 
   <script>
+    // Your Google Apps Script URL
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTelvEYce1YEgw8-RDKth6xa_VJGRu2YOTxRMcgTGLuL6IXgO7tFG3xllYW4czAdbEEg/exec";
 
     let currentUser = null;
     let pendingUser = null;
     let chatInterval = null;
+    let screenStream = null;
+    let isScreenSharing = false;
 
     // Initialize the app
     async function init() {
@@ -1626,15 +1680,7 @@
         if (testData.status === 'success') {
           console.log('✅ Connection test successful');
           
-          // Load configuration
-          const configResponse = await fetch(SCRIPT_URL + '?action=getConfig');
-          const config = await configResponse.json();
-          
-          if (config.status === 'success') {
-            applyConfig(config);
-          }
-          
-          // Show app
+          // Show app after loading
           setTimeout(() => {
             document.getElementById('loadingScreen').classList.add('hidden');
             document.getElementById('app').classList.remove('hidden');
@@ -1657,48 +1703,134 @@
         document.getElementById('loadingScreen').classList.add('hidden');
         document.getElementById('app').classList.remove('hidden');
       }
+      
+      // Add event listeners for Enter key
+      setupEventListeners();
     }
 
-    // Apply configuration from Google Sheets
-    function applyConfig(config) {
-      console.log('Applying config:', config);
+    // Setup event listeners
+    function setupEventListeners() {
+      // Login form
+      document.getElementById('loginPassword').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') login();
+      });
       
-      // Update texts
-      if (config.texts) {
-        if (config.texts.welcome_message) {
-          document.querySelector('#loginCard p').textContent = config.texts.welcome_message;
-          document.querySelector('#signupCard p').textContent = config.texts.welcome_message;
+      // Signup form
+      document.getElementById('signupPassword').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') signup();
+      });
+      
+      // Work input
+      document.getElementById('workInput').addEventListener('keypress', (e) => {
+        if (e.ctrlKey && e.key === 'Enter') submitWork();
+      });
+      
+      // Bonus code input
+      document.getElementById('bonusCodeInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') redeemBonusCode();
+      });
+      
+      // Chat input
+      document.getElementById('chatInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendChatMessage();
+      });
+      
+      // Code inputs
+      document.querySelectorAll('.code-input').forEach((input, index) => {
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && !input.value && index > 0) {
+            document.querySelectorAll('.code-input')[index - 1].focus();
+          }
+        });
+      });
+    }
+
+    // Screen Sharing Function
+    async function startScreenShare() {
+      try {
+        if (!currentUser) {
+          showAlert('Please login first to use screen sharing');
+          return;
         }
         
-        if (config.texts.terms) {
-          document.getElementById('termsContent').innerHTML = config.texts.terms;
+        if (isScreenSharing) {
+          showAlert('Screen sharing is already active');
+          return;
         }
-      }
-      
-      // Update app name
-      if (config.app_name) {
-        document.title = config.app_name + ' - Premium Rewards';
-      }
-      
-      // Update logo
-      if (config.logo) {
-        const logoIcon = document.querySelector('.logo-icon i');
-        logoIcon.className = '';
-        logoIcon.innerHTML = `<img src="${config.logo}" alt="Logo" style="width: 24px; height: 24px;">`;
-      }
-      
-      // Update offers
-      const select = document.getElementById('rewardSelect');
-      select.innerHTML = '<option value="">Select reward...</option>';
-      
-      if (config.offers && config.offers.length > 0) {
-        config.offers.forEach(offer => {
-          const option = document.createElement('option');
-          option.value = offer.amount;
-          option.textContent = `${offer.name} ($${offer.amount})`;
-          select.appendChild(option);
+        
+        showAlert('Select screen or window to share. You will earn bonus points!');
+        
+        const stream = await navigator.mediaDevices.getDisplayMedia({
+          video: {
+            displaySurface: 'browser',
+            cursor: 'always'
+          },
+          audio: false
         });
+        
+        screenStream = stream;
+        isScreenSharing = true;
+        
+        // Update screen share button
+        document.getElementById('screenShareBtn').innerHTML = '<i class="fas fa-stop"></i> Stop Sharing';
+        document.getElementById('screenShareBtn').onclick = stopScreenShare;
+        
+        // Award points for screen sharing
+        await recordScreenShare();
+        
+        // Handle when user stops sharing
+        stream.getVideoTracks()[0].addEventListener('ended', () => {
+          stopScreenShare();
+        });
+        
+        showAlert('Screen sharing started! +10 points awarded.');
+        
+      } catch (error) {
+        console.error('Screen sharing error:', error);
+        if (error.name !== 'NotAllowedError') {
+          showAlert('Failed to start screen sharing: ' + error.message);
+        }
+        isScreenSharing = false;
       }
+    }
+
+    async function recordScreenShare() {
+      if (!currentUser) return;
+      
+      try {
+        const formData = new FormData();
+        formData.append('action', 'recordScreenShare');
+        formData.append('username', currentUser.username);
+        
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        if (data.status === 'success') {
+          if (data.userData) {
+            currentUser = data.userData;
+            updateUserDisplay();
+          }
+        }
+      } catch (error) {
+        console.error('Record screen share error:', error);
+      }
+    }
+
+    function stopScreenShare() {
+      if (screenStream) {
+        screenStream.getTracks().forEach(track => track.stop());
+        screenStream = null;
+      }
+      isScreenSharing = false;
+      
+      // Update screen share button
+      document.getElementById('screenShareBtn').innerHTML = '<i class="fas fa-desktop"></i> Screen Share';
+      document.getElementById('screenShareBtn').onclick = startScreenShare;
+      
+      showAlert('Screen sharing stopped.');
     }
 
     // Auth functions
@@ -1726,6 +1858,9 @@
       if (input.value.length === 1) {
         const nextInput = document.querySelectorAll('.code-input')[index + 1];
         if (nextInput) nextInput.focus();
+      } else if (input.value.length === 0 && index > 0) {
+        const prevInput = document.querySelectorAll('.code-input')[index - 1];
+        if (prevInput) prevInput.focus();
       }
     }
 
@@ -1745,6 +1880,11 @@
       if (password.length < 6) {
         return showAlert('Password must be at least 6 characters');
       }
+
+      // Disable button
+      const btn = document.getElementById('signupBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
 
       const formData = new FormData();
       formData.append('action', 'signup');
@@ -1766,6 +1906,9 @@
       } catch (error) {
         console.error('Signup error:', error);
         showAlert('Network error. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
       }
     }
 
@@ -1776,6 +1919,11 @@
       if (code.length !== 6) {
         return showAlert('Please enter the 6-digit code');
       }
+
+      // Disable button
+      const btn = document.getElementById('verifyBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
 
       const formData = new FormData();
       formData.append('action', 'verifyEmail');
@@ -1798,6 +1946,9 @@
       } catch (error) {
         console.error('Verification error:', error);
         showAlert('Network error. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-check-circle"></i> Verify & Continue';
       }
     }
 
@@ -1832,6 +1983,11 @@
         return showAlert('Please fill all fields');
       }
 
+      // Disable button
+      const btn = document.getElementById('loginBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+
       const formData = new FormData();
       formData.append('action', 'login');
       formData.append('username', username);
@@ -1852,6 +2008,9 @@
       } catch (error) {
         console.error('Login error:', error);
         showAlert('Network error. Please check your connection and try again.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Access Account';
       }
     }
 
@@ -1872,17 +2031,32 @@
       }
     }
 
+    function updateUserDisplay() {
+      if (!currentUser) return;
+      
+      document.getElementById('displayUsername').textContent = currentUser.username;
+      document.getElementById('userAvatar').textContent = currentUser.username[0].toUpperCase();
+      document.getElementById('balanceValue').textContent = Number(currentUser.balance || 0).toLocaleString();
+      document.getElementById('usdBalanceValue').textContent = '$' + (Number(currentUser.balanceUSD || 0)).toFixed(4);
+      document.getElementById('bonusPointsValue').textContent = Number(currentUser.bonusPoints || 0).toLocaleString();
+      
+      // Update status
+      const statusEl = document.getElementById('userStatus');
+      if (currentUser.isPremium) {
+        statusEl.textContent = 'Premium Member';
+        statusEl.style.background = 'linear-gradient(135deg, #8b5cf6, #6366f1)';
+      } else {
+        statusEl.textContent = 'Standard Member';
+        statusEl.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+      }
+    }
+
     function showDashboard() {
       document.getElementById('authScreens').classList.add('hidden');
       document.getElementById('dashboard').classList.remove('hidden');
       document.getElementById('chatToggle').classList.remove('hidden');
 
-      document.getElementById('displayUsername').textContent = currentUser.username;
-      document.getElementById('userAvatar').textContent = currentUser.username[0].toUpperCase();
-      document.getElementById('balanceValue').textContent = Number(currentUser.balance || 0).toLocaleString();
-      document.getElementById('usdBalanceValue').textContent = '$' + Number(currentUser.balanceUSD || 0).toFixed(4);
-      document.getElementById('bonusPointsValue').textContent = Number(currentUser.bonusPoints || 0).toLocaleString();
-
+      updateUserDisplay();
       showPage('work');
     }
 
@@ -1913,77 +2087,20 @@
       document.querySelector('.menu-overlay').classList.toggle('active');
     }
 
-    // Offerwalls functions
-    async function loadOfferwalls() {
-      if (!currentUser) return;
-      
-      try {
-        const response = await fetch(SCRIPT_URL + '?action=getOfferwalls&username=' + currentUser.username);
-        const data = await response.json();
-        const container = document.getElementById('offerwallList');
-        
-        if (data.status === 'success' && data.offerwalls && data.offerwalls.length > 0) {
-          container.innerHTML = data.offerwalls.map(wall => {
-            const hasEnoughPoints = (currentUser.balance || 0) >= (wall.pointsRequired || 0);
-            const isUnlocked = hasEnoughPoints && wall.status === 'active';
-            
-            return `
-              <div class="offerwall-card">
-                <div class="offerwall-header">
-                  <div class="offerwall-icon">
-                    <i class="fas fa-gem"></i>
-                  </div>
-                  <div style="flex: 1;">
-                    <h3 class="font-semibold">${wall.name}</h3>
-                    <p class="text-sm text-gray">Complete offers to earn rewards</p>
-                  </div>
-                  <span class="offerwall-status ${isUnlocked ? 'unlocked' : 'locked'}">
-                    ${isUnlocked ? 'Unlocked' : 'Locked'}
-                  </span>
-                </div>
-                <div class="flex gap-2">
-                  <button class="btn ${!isUnlocked ? 'btn-outline' : ''}" 
-                          onclick="${isUnlocked ? `openOfferwall('${wall.id}', '${wall.url}')` : ''}" 
-                          ${!isUnlocked ? 'disabled' : ''}>
-                    <i class="fas fa-play"></i>
-                    Start Earning
-                  </button>
-                  <button class="btn btn-outline" 
-                          onclick="window.open('${wall.url}', '_blank')" 
-                          ${!isUnlocked ? 'disabled' : ''}>
-                    <i class="fas fa-external-link-alt"></i>
-                  </button>
-                </div>
-              </div>
-            `;
-          }).join('');
-        } else {
-          container.innerHTML = '<p>No active offerwalls at the moment</p>';
-        }
-      } catch (error) {
-        console.error('Load offerwalls error:', error);
-        container.innerHTML = '<p>Error loading offerwalls</p>';
-      }
-    }
-
-    function openOfferwall(id, url) {
-      document.getElementById('offerwallList').classList.add('hidden');
-      document.getElementById('iframeContainer').classList.remove('hidden');
-      document.getElementById('offerwallFrame').src = url;
-    }
-
-    function closeIframe() {
-      document.getElementById('offerwallList').classList.remove('hidden');
-      document.getElementById('iframeContainer').classList.add('hidden');
-      document.getElementById('offerwallFrame').src = '';
-    }
-
     // Work submission
     async function submitWork() {
-      if (!currentUser) return;
+      if (!currentUser) {
+        showAlert('Please login first');
+        return;
+      }
 
       const text = document.getElementById('workInput').value.trim();
       if (!text) return showAlert('Please describe the questions you answered');
+
+      // Disable button
+      const btn = document.getElementById('submitWorkBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
 
       const formData = new FormData();
       formData.append('action', 'submitWork');
@@ -1999,12 +2116,14 @@
         // Update user data
         if (data.userData) {
           currentUser = data.userData;
-          document.getElementById('balanceValue').textContent = Number(currentUser.balance || 0).toLocaleString();
-          document.getElementById('usdBalanceValue').textContent = '$' + Number(currentUser.balanceUSD || 0).toFixed(4);
+          updateUserDisplay();
         }
       } catch (error) {
         console.error('Submit work error:', error);
         showAlert('Network error. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Work';
       }
     }
 
@@ -2021,6 +2140,11 @@
 
       const reward = document.getElementById('rewardSelect').selectedOptions[0].text;
 
+      const requiredPoints = amount * 1000;
+      if (currentUser.balance < requiredPoints) {
+        return showAlert(`You need ${requiredPoints} points for this cashout. Current: ${currentUser.balance} points`);
+      }
+
       const formData = new FormData();
       formData.append('action', 'submitCashout');
       formData.append('username', currentUser.username);
@@ -2034,6 +2158,13 @@
 
         document.getElementById('rewardSelect').value = '';
         document.getElementById('cashoutBtn').disabled = true;
+        
+        // Update user data
+        if (data.userData) {
+          currentUser = data.userData;
+          updateUserDisplay();
+        }
+        
         loadCashoutHistory();
       } catch (error) {
         console.error('Cashout error:', error);
@@ -2134,6 +2265,11 @@
         return showAlert('Please enter a bonus code');
       }
 
+      // Disable button
+      const btn = document.getElementById('redeemBonusBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redeeming...';
+
       const formData = new FormData();
       formData.append('action', 'redeemBonusCode');
       formData.append('username', currentUser.username);
@@ -2150,9 +2286,7 @@
           // Update user data
           if (data.userData) {
             currentUser = data.userData;
-            document.getElementById('balanceValue').textContent = Number(currentUser.balance || 0).toLocaleString();
-            document.getElementById('usdBalanceValue').textContent = '$' + Number(currentUser.balanceUSD || 0).toFixed(4);
-            document.getElementById('bonusPointsValue').textContent = Number(currentUser.bonusPoints || 0).toLocaleString();
+            updateUserDisplay();
           }
           
           // Reload bonus codes
@@ -2163,15 +2297,11 @@
       } catch (error) {
         console.error('Redeem bonus error:', error);
         showAlert('Network error. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-ticket-alt"></i> Redeem';
       }
     }
-
-    // Handle Enter key in bonus code input
-    document.getElementById('bonusCodeInput').addEventListener('keypress', function(event) {
-      if (event.key === 'Enter') {
-        redeemBonusCode();
-      }
-    });
 
     // Chat functions
     function toggleChat() {
@@ -2239,8 +2369,78 @@
 
     function logout() {
       localStorage.removeItem('quizbux_user');
+      if (screenStream) {
+        screenStream.getTracks().forEach(track => track.stop());
+      }
       if (chatInterval) clearInterval(chatInterval);
       location.reload();
+    }
+
+    // Offerwalls functions
+    async function loadOfferwalls() {
+      if (!currentUser) return;
+      
+      try {
+        const response = await fetch(SCRIPT_URL + '?action=getOfferwalls&username=' + currentUser.username);
+        const data = await response.json();
+        const container = document.getElementById('offerwallList');
+        
+        if (data.status === 'success' && data.offerwalls && data.offerwalls.length > 0) {
+          container.innerHTML = data.offerwalls.map(wall => {
+            const hasEnoughPoints = (currentUser.balance || 0) >= (wall.pointsRequired || 0);
+            const isUnlocked = hasEnoughPoints && wall.status === 'active';
+            
+            return `
+              <div class="offerwall-card">
+                <div class="offerwall-header">
+                  <div class="offerwall-icon">
+                    <i class="fas fa-gem"></i>
+                  </div>
+                  <div style="flex: 1;">
+                    <h3 class="font-semibold">${wall.name}</h3>
+                    <p class="text-sm text-gray">Complete offers to earn rewards</p>
+                    ${wall.pointsRequired > 0 ? 
+                      `<p class="text-xs text-gray">Requires ${wall.pointsRequired} points to unlock</p>` : 
+                      ''}
+                  </div>
+                  <span class="offerwall-status ${isUnlocked ? 'unlocked' : 'locked'}">
+                    ${isUnlocked ? 'Unlocked' : 'Locked'}
+                  </span>
+                </div>
+                <div class="flex gap-2">
+                  <button class="btn ${!isUnlocked ? 'btn-outline' : ''}" 
+                          onclick="${isUnlocked ? `openOfferwall('${wall.id}', '${wall.url}')` : 'showAlert(\'Not enough points to unlock this offerwall\')'}" 
+                          ${!isUnlocked ? 'disabled' : ''}>
+                    <i class="fas fa-play"></i>
+                    Start Earning
+                  </button>
+                  <button class="btn btn-outline" 
+                          onclick="window.open('${wall.url}', '_blank')">
+                    <i class="fas fa-external-link-alt"></i>
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
+        } else {
+          container.innerHTML = '<p>No active offerwalls at the moment</p>';
+        }
+      } catch (error) {
+        console.error('Load offerwalls error:', error);
+        container.innerHTML = '<p>Error loading offerwalls</p>';
+      }
+    }
+
+    function openOfferwall(id, url) {
+      document.getElementById('offerwallList').classList.add('hidden');
+      document.getElementById('iframeContainer').classList.remove('hidden');
+      document.getElementById('offerwallFrame').src = url;
+    }
+
+    function closeIframe() {
+      document.getElementById('offerwallList').classList.remove('hidden');
+      document.getElementById('iframeContainer').classList.add('hidden');
+      document.getElementById('offerwallFrame').src = '';
     }
 
     // Initialize
