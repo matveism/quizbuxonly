@@ -3,12 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Insignia - Premium Rewards with Live Chat</title>
+  <title>Insignia - Premium Rewards</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
+  <script src="https://minnit.chat/js/chaticon.js" defer></script>
+<span
+data-icon-pixel-size="80"
+data-chat-small-medium-or-large="small"
+data-circle-or-square="square"
+data-left-or-right="right"
+data-chaturl="https://organizations.minnit.chat/616051348858691/c/Main"
+data-hex-color-code="3a87fe"
+data-icon-url=""
+class="minnit-chat-icon-sembed"
+style="display:block">
+</span>
+<style>
     :root {
-      /* Modern Gradient Theme */
       --primary: #6366f1;
       --primary-dark: #4f46e5;
       --primary-light: #818cf8;
@@ -18,14 +29,15 @@
       --dark: #0f172a;
       --dark-card: #1e293b;
       --darker: #0a0f1c;
-      --light: #f8fafc;
+      --darker-alt: #050813;
+      --light: #e2e8f0;
       --gray: #64748b;
       --gray-light: #cbd5e1;
-      --border: rgba(255, 255, 255, 0.1);
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-      --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
       --gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
-      --gradient-dark: linear-gradient(135deg, #0f172a, #1e1b4b);
+      --gradient-dark: linear-gradient(135deg, #0a0f1c, #0f172a, #1e1b4b);
       --radius: 16px;
       --radius-sm: 8px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -37,14 +49,15 @@
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--gradient-dark);
+      background: var(--darker-alt);
       color: var(--light);
       min-height: 100vh;
       overflow-x: hidden;
       line-height: 1.6;
       position: relative;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body::before {
@@ -55,13 +68,13 @@
       width: 100%;
       height: 100%;
       background: 
-        radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(219, 70, 239, 0.05) 0%, transparent 50%);
+        radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 80% 70%, rgba(219, 70, 239, 0.04) 0%, transparent 60%),
+        var(--gradient-dark);
       pointer-events: none;
       z-index: -1;
     }
 
-    /* Utility Classes */
     .hidden { display: none !important; }
     .flex { display: flex; }
     .flex-col { flex-direction: column; }
@@ -92,18 +105,16 @@
     .relative { position: relative; }
     .absolute { position: absolute; }
 
-    /* Container */
     .container {
       max-width: 1400px;
       margin: 0 auto;
       padding: 0 1rem;
     }
 
-    /* Loading Screen */
     #loadingScreen {
       position: fixed;
       inset: 0;
-      background: var(--darker);
+      background: var(--darker-alt);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -114,7 +125,7 @@
     .loading-content {
       text-align: center;
       padding: 3rem;
-      background: rgba(30, 41, 59, 0.8);
+      background: rgba(10, 15, 28, 0.9);
       border-radius: var(--radius);
       backdrop-filter: blur(20px);
       border: 1px solid var(--border);
@@ -124,7 +135,7 @@
     .loading-spinner {
       width: 60px;
       height: 60px;
-      border: 3px solid rgba(99, 102, 241, 0.3);
+      border: 3px solid rgba(99, 102, 241, 0.2);
       border-top-color: var(--primary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
@@ -135,109 +146,38 @@
       to { transform: rotate(360deg); }
     }
 
-    /* App Container */
     #app {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      background: transparent;
     }
 
-    /* Notification Styles */
-    .notification-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 10000;
-      max-width: 350px;
-      pointer-events: none;
-    }
-
-    .notification {
-      background: var(--gradient);
-      color: white;
-      padding: 15px 20px;
-      margin-bottom: 10px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-lg);
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      transform: translateX(400px);
-      opacity: 0;
-      animation: slideIn 0.3s forwards, fadeOut 0.3s 4.7s forwards;
-      border-left: 4px solid var(--secondary);
-      pointer-events: all;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .notification:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-    }
-
-    .notification-icon {
-      font-size: 1.5rem;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes slideIn {
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        transform: translateX(400px);
-      }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.1); }
-    }
-
-    /* Mobile notification banner */
-    .mobile-notification-banner {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: var(--gradient);
-      color: white;
-      padding: 15px;
-      text-align: center;
-      z-index: 10001;
-      display: none;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-      animation: slideDown 0.3s forwards;
-    }
-
-    @keyframes slideDown {
-      from { transform: translateY(-100%); }
-      to { transform: translateY(0); }
-    }
-
-    /* Modern 9-Dot Navbar */
     .navbar {
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
+      background: transparent;
       position: sticky;
       top: 0;
       z-index: 1000;
       padding: 1rem 0;
+      display: flex;
+      justify-content: center;
+      width: 100%;
     }
 
     .nav-container {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 1.5rem;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(25px);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      width: 95%;
+      max-width: 1300px;
+      margin: 0 auto;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
     }
 
     .logo {
@@ -250,6 +190,7 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      margin-left: 0.5rem;
     }
 
     .logo-icon {
@@ -263,13 +204,12 @@
       color: white;
     }
 
-    /* 9-Dot Menu */
     .menu-toggle {
       width: 48px;
       height: 48px;
-      border-radius: 12px;
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -277,11 +217,12 @@
       transition: var(--transition);
       position: relative;
       z-index: 1001;
+      margin-right: 0.5rem;
     }
 
     .menu-toggle:hover {
-      background: rgba(99, 102, 241, 0.2);
-      transform: translateY(-2px);
+      background: rgba(99, 102, 241, 0.25);
+      transform: translateY(-2px) scale(1.05);
     }
 
     .dots-menu {
@@ -312,15 +253,14 @@
       margin-top: -4px;
     }
 
-    /* Mobile Menu */
     .mobile-menu {
       position: fixed;
       top: 0;
       right: 0;
       width: 320px;
       height: 100vh;
-      background: rgba(15, 23, 42, 0.98);
-      backdrop-filter: blur(30px);
+      background: rgba(10, 15, 28, 0.98);
+      backdrop-filter: blur(35px);
       border-left: 1px solid var(--border);
       padding: 5rem 2rem 2rem;
       transform: translateX(100%);
@@ -328,7 +268,7 @@
       z-index: 999;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .mobile-menu.active {
@@ -338,8 +278,8 @@
     .menu-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
       z-index: 998;
       opacity: 0;
       pointer-events: none;
@@ -356,22 +296,24 @@
       align-items: center;
       gap: 1rem;
       padding: 1rem;
-      border-radius: var(--radius-sm);
+      border-radius: 12px;
       color: var(--light);
       text-decoration: none;
       font-weight: 500;
       transition: var(--transition);
       border: 1px solid transparent;
+      background: rgba(30, 41, 59, 0.4);
+      cursor: pointer;
     }
 
     .menu-item:hover {
-      background: rgba(99, 102, 241, 0.1);
-      border-color: rgba(99, 102, 241, 0.3);
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.4);
       transform: translateX(5px);
     }
 
     .menu-item.active {
-      background: linear-gradient(90deg, rgba(99, 102, 241, 0.2), transparent);
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0.3), rgba(99, 102, 241, 0.1));
       border-color: var(--primary);
       color: var(--primary-light);
     }
@@ -382,11 +324,11 @@
       font-size: 1.1rem;
     }
 
-    /* Desktop Nav */
     .desktop-nav {
       display: none;
-      gap: 0.5rem;
+      gap: 0.75rem;
       align-items: center;
+      margin-right: 1rem;
     }
 
     @media (min-width: 1024px) {
@@ -396,13 +338,17 @@
       .menu-toggle {
         display: none;
       }
+      .nav-container {
+        padding: 0.5rem 2rem;
+        width: 90%;
+      }
     }
 
     .nav-button {
-      padding: 0.75rem 1.5rem;
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      border-radius: var(--radius-sm);
+      padding: 0.75rem 1.75rem;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 25px;
       color: var(--light);
       font-weight: 500;
       text-decoration: none;
@@ -410,34 +356,43 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      white-space: nowrap;
+      cursor: pointer;
+      border: none;
     }
 
     .nav-button:hover {
-      background: rgba(99, 102, 241, 0.2);
+      background: rgba(99, 102, 241, 0.25);
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
     }
 
     .nav-button.primary {
       background: var(--gradient);
       border: none;
       color: white;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
     }
 
-    /* Auth Screens */
+    .nav-button.primary:hover {
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+      transform: translateY(-3px);
+    }
+
     .auth-container {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 2rem 1rem;
+      background: transparent;
     }
 
     .auth-card {
       width: 100%;
       max-width: 440px;
-      background: rgba(30, 41, 59, 0.8);
-      backdrop-filter: blur(20px);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(25px);
       border-radius: var(--radius);
       border: 1px solid var(--border);
       padding: 2.5rem;
@@ -487,7 +442,7 @@
     .input-field {
       width: 100%;
       padding: 1rem;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(10, 15, 28, 0.7);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--light);
@@ -498,7 +453,7 @@
 
     .input-field:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
     }
 
     .input-field::placeholder {
@@ -524,7 +479,7 @@
 
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
     }
 
     .btn:disabled {
@@ -556,7 +511,6 @@
       text-decoration: underline;
     }
 
-    /* Verification Code */
     .verification-container {
       display: flex;
       gap: 0.75rem;
@@ -570,7 +524,7 @@
       text-align: center;
       font-size: 1.5rem;
       font-weight: 700;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(10, 15, 28, 0.7);
       border: 2px solid var(--border);
       border-radius: 10px;
       color: var(--light);
@@ -579,20 +533,19 @@
 
     .code-input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
       transform: scale(1.05);
     }
 
-    /* Dashboard */
     .dashboard {
       flex: 1;
       padding: 2rem 1rem;
+      background: transparent;
     }
 
-    /* Profile Header */
     .profile-header {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
-      backdrop-filter: blur(20px);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(10, 15, 28, 0.85));
+      backdrop-filter: blur(25px);
       border-radius: var(--radius);
       border: 1px solid var(--border);
       padding: 2rem;
@@ -613,7 +566,7 @@
       font-size: 2rem;
       font-weight: 700;
       color: white;
-      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
     }
 
     .user-info {
@@ -636,7 +589,6 @@
       font-weight: 600;
     }
 
-    /* Balance Cards */
     .balance-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -645,13 +597,14 @@
     }
 
     .balance-card {
-      background: rgba(30, 41, 59, 0.6);
+      background: rgba(15, 23, 42, 0.7);
       border-radius: var(--radius);
       border: 1px solid var(--border);
       padding: 1.5rem;
       transition: var(--transition);
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(10px);
     }
 
     .balance-card::before {
@@ -667,6 +620,7 @@
     .balance-card:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
     }
 
     .balance-label {
@@ -690,23 +644,28 @@
       color: var(--accent);
     }
 
-    /* Tabs Navigation */
     .tabs {
       display: flex;
       gap: 0.5rem;
       overflow-x: auto;
       padding: 0.5rem;
       margin-bottom: 2rem;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(10, 15, 28, 0.7);
       border-radius: var(--radius);
       border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      scrollbar-width: none;
+    }
+
+    .tabs::-webkit-scrollbar {
+      display: none;
     }
 
     .tab-button {
       padding: 0.75rem 1.5rem;
       background: transparent;
       border: none;
-      border-radius: var(--radius-sm);
+      border-radius: 25px;
       color: var(--gray);
       font-weight: 500;
       white-space: nowrap;
@@ -718,20 +677,19 @@
     }
 
     .tab-button:hover {
-      background: rgba(99, 102, 241, 0.1);
+      background: rgba(99, 102, 241, 0.15);
       color: var(--light);
     }
 
     .tab-button.active {
       background: var(--gradient);
       color: white;
-      box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
+      box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
     }
 
-    /* Content Pages */
     .content-page {
-      background: rgba(30, 41, 59, 0.8);
-      backdrop-filter: blur(20px);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(25px);
       border-radius: var(--radius);
       border: 1px solid var(--border);
       padding: 2rem;
@@ -756,9 +714,8 @@
       margin-left: 1rem;
     }
 
-    /* Work Page */
     .work-description {
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(10, 15, 28, 0.7);
       border-radius: var(--radius-sm);
       padding: 1.5rem;
       margin-bottom: 1.5rem;
@@ -769,7 +726,7 @@
       width: 100%;
       min-height: 150px;
       padding: 1rem;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(10, 15, 28, 0.7);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--light);
@@ -782,10 +739,9 @@
 
     .work-textarea:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
     }
 
-    /* Offerwalls */
     .offerwall-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -793,11 +749,12 @@
     }
 
     .offerwall-card {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(10, 15, 28, 0.9));
       border-radius: var(--radius);
       border: 1px solid var(--border);
       padding: 1.5rem;
       transition: var(--transition);
+      backdrop-filter: blur(10px);
     }
 
     .offerwall-card:hover {
@@ -842,7 +799,6 @@
       color: var(--danger);
     }
 
-    /* Bonus Codes */
     .bonus-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -859,7 +815,7 @@
     .bonus-input {
       flex: 1;
       padding: 1rem;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(10, 15, 28, 0.7);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--light);
@@ -875,7 +831,7 @@
     }
 
     .bonus-item {
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(10, 15, 28, 0.7);
       border-radius: var(--radius-sm);
       padding: 1rem;
       display: flex;
@@ -883,6 +839,7 @@
       justify-content: space-between;
       border: 1px solid var(--border);
       transition: var(--transition);
+      backdrop-filter: blur(5px);
     }
 
     .bonus-item:hover {
@@ -902,7 +859,6 @@
       font-weight: 600;
     }
 
-    /* Cashout */
     .cashout-form {
       max-width: 400px;
       margin: 0 auto 2rem;
@@ -911,7 +867,7 @@
     .reward-select {
       width: 100%;
       padding: 1rem;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(10, 15, 28, 0.7);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--light);
@@ -929,12 +885,13 @@
     }
 
     .history-item {
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(10, 15, 28, 0.7);
       border-radius: var(--radius-sm);
       padding: 1rem;
       margin-bottom: 1rem;
       border-left: 4px solid var(--primary);
       transition: var(--transition);
+      backdrop-filter: blur(5px);
     }
 
     .history-item:hover {
@@ -954,7 +911,6 @@
     .status-approved { background: rgba(16, 185, 129, 0.2); color: #10b981; }
     .status-rejected { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
 
-    /* Enhanced Chat System */
     .chat-toggle {
       position: fixed;
       bottom: 2rem;
@@ -967,13 +923,14 @@
       color: white;
       font-size: 1.5rem;
       cursor: pointer;
-      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
       z-index: 990;
       transition: var(--transition);
     }
 
     .chat-toggle:hover {
       transform: scale(1.1) rotate(10deg);
+      box-shadow: 0 15px 30px rgba(99, 102, 241, 0.5);
     }
 
     .chat-box {
@@ -982,8 +939,8 @@
       right: 2rem;
       width: 350px;
       height: 500px;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(20px);
+      background: rgba(10, 15, 28, 0.95);
+      backdrop-filter: blur(25px);
       border-radius: var(--radius);
       border: 1px solid var(--border);
       box-shadow: var(--shadow-lg);
@@ -1004,35 +961,22 @@
 
     .chat-header {
       padding: 1rem 1.5rem;
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.2));
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(139, 92, 246, 0.15));
       border-radius: var(--radius) var(--radius) 0 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: relative;
     }
 
-    .chat-unread-badge {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: var(--danger);
-      color: white;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      font-size: 0.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
-      animation: bounce 2s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
+    .chat-close {
+      background: none;
+      border: none;
+      color: var(--gray);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+      width: 24px;
+      height: 24px;
     }
 
     .chat-messages {
@@ -1046,13 +990,9 @@
 
     .chat-message {
       max-width: 80%;
-      padding: 12px 16px;
-      border-radius: 18px;
-      font-size: 0.9rem;
-      line-height: 1.4;
-      position: relative;
-      margin-bottom: 8px;
-      word-wrap: break-word;
+      padding: 0.75rem 1rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
     }
 
     .chat-message.own {
@@ -1063,118 +1003,48 @@
     }
 
     .chat-message.other {
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid rgba(99, 102, 241, 0.3);
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border);
       align-self: flex-start;
       border-bottom-left-radius: 4px;
     }
 
-    .message-time {
-      font-size: 0.7rem;
-      opacity: 0.7;
-      margin-top: 4px;
-      text-align: right;
-    }
-
     .chat-input-container {
-      padding: 15px;
+      padding: 1rem;
       border-top: 1px solid var(--border);
       display: flex;
-      gap: 10px;
-      align-items: center;
-      background: rgba(15, 23, 42, 0.8);
+      gap: 0.5rem;
     }
 
     .chat-input {
       flex: 1;
-      padding: 12px 16px;
-      background: rgba(30, 41, 59, 0.8);
+      padding: 0.75rem 1rem;
+      background: rgba(10, 15, 28, 0.7);
       border: 1px solid var(--border);
-      border-radius: 25px;
+      border-radius: var(--radius-sm);
       color: var(--light);
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       outline: none;
-      transition: var(--transition);
     }
 
-    .chat-input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-    }
-
-    .chat-actions {
-      display: flex;
-      gap: 5px;
-    }
-
-    .chat-action-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      color: var(--primary-light);
+    .chat-send {
+      width: 44px;
+      height: 44px;
+      background: var(--gradient);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: white;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      transition: var(--transition);
     }
 
-    .chat-action-btn:hover {
-      background: rgba(99, 102, 241, 0.2);
-      transform: scale(1.1);
-    }
-
-    .typing-indicator {
-      display: flex;
-      gap: 4px;
-      padding: 10px 15px;
-      background: rgba(30, 41, 59, 0.6);
-      border-radius: 15px;
-      margin-left: 10px;
-      align-self: flex-start;
-      display: none;
-    }
-
-    .typing-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--primary-light);
-      border-radius: 50%;
-      animation: typing 1.4s infinite;
-    }
-
-    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-    @keyframes typing {
-      0%, 60%, 100% { transform: translateY(0); }
-      30% { transform: translateY(-5px); }
-    }
-
-    /* Online Status */
-    .online-status {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.8rem;
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: pulse 2s infinite;
-    }
-
-    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(15px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1190,8 +1060,8 @@
     }
 
     .modal {
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(30px);
+      background: rgba(10, 15, 28, 0.95);
+      backdrop-filter: blur(35px);
       border-radius: var(--radius);
       border: 1px solid var(--border);
       padding: 2rem;
@@ -1213,12 +1083,12 @@
       font-size: 1.1rem;
     }
 
-    /* Footer */
     .footer {
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(10, 15, 28, 0.9);
       border-top: 1px solid var(--border);
       padding: 2rem 1rem;
       margin-top: auto;
+      backdrop-filter: blur(20px);
     }
 
     .footer-content {
@@ -1228,25 +1098,16 @@
       color: var(--gray);
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
-      .container {
-        padding: 0 0.75rem;
-      }
-      
-      .notification-container {
-        top: 60px;
-        right: 10px;
-        left: 10px;
-        max-width: none;
-      }
-      
-      .notification {
-        padding: 12px 15px;
+      .nav-container {
+        width: 92%;
+        padding: 0.4rem 1.25rem;
+        border-radius: 40px;
+        margin: 0.5rem auto;
       }
       
       .auth-card {
-        padding: 1.5rem;
+        padding: 1.75rem;
       }
       
       .profile-header {
@@ -1256,6 +1117,10 @@
       
       .balance-grid {
         grid-template-columns: 1fr;
+      }
+      
+      .content-page {
+        padding: 1.5rem;
       }
       
       .offerwall-grid,
@@ -1268,20 +1133,10 @@
       }
       
       .chat-box {
-        width: calc(100% - 20px);
-        height: 70vh;
-        bottom: 70px;
-        right: 10px;
-      }
-      
-      .tabs {
-        padding: 0.25rem;
-        gap: 0.25rem;
-      }
-      
-      .tab-button {
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
+        width: calc(100% - 2rem);
+        right: 1rem;
+        bottom: 4rem;
+        height: 400px;
       }
       
       .verification-container {
@@ -1289,31 +1144,23 @@
       }
       
       .code-input {
-        width: 40px;
-        height: 50px;
+        width: 45px;
+        height: 55px;
         font-size: 1.25rem;
       }
       
-      .mobile-notification-banner {
-        display: block;
-      }
-      
-      .chat-toggle {
-        width: 50px;
-        height: 50px;
-        font-size: 1.25rem;
-        bottom: 1rem;
-        right: 1rem;
+      .mobile-menu {
+        width: 85%;
       }
     }
 
     @media (max-width: 480px) {
       .content-page {
-        padding: 1.5rem;
+        padding: 1.25rem;
       }
       
       .auth-card {
-        padding: 1.25rem;
+        padding: 1.5rem;
       }
       
       .auth-title {
@@ -1329,8 +1176,30 @@
       }
       
       .mobile-menu {
-        width: 280px;
+        width: 90%;
         padding: 4rem 1.5rem 1.5rem;
+      }
+      
+      .chat-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+        bottom: 1.5rem;
+        right: 1.5rem;
+      }
+      
+      .nav-container {
+        padding: 0.35rem 1rem;
+        border-radius: 35px;
+      }
+      
+      .logo {
+        font-size: 1.3rem;
+      }
+      
+      .logo-icon {
+        width: 32px;
+        height: 32px;
       }
     }
   </style>
@@ -1345,14 +1214,6 @@
     </div>
   </div>
 
-  <!-- Notification Container -->
-  <div class="notification-container" id="notificationContainer"></div>
-
-  <!-- Mobile Notification Banner -->
-  <div class="mobile-notification-banner" id="mobileNotificationBanner">
-    <i class="fas fa-comment-alt"></i> New message received! Tap to open chat.
-  </div>
-
   <!-- App Container -->
   <div id="app" class="hidden">
     <!-- Navbar -->
@@ -1361,33 +1222,33 @@
         <!-- Logo -->
         <div class="logo">
           <div class="logo-icon">
-            <i class="fas fa-crown"></i>
+            <i class="fas fa-q"></i>
           </div>
-          <span>Insignia</span>
+          <span>UIZBUX</span>
         </div>
 
         <!-- Desktop Navigation -->
         <div class="desktop-nav">
-          <a href="#" class="nav-button" onclick="showPage('work')">
+          <button class="nav-button" onclick="showPage('work')">
             <i class="fas fa-briefcase"></i>
             Tasks
-          </a>
-          <a href="#" class="nav-button" onclick="showPage('offerwalls')">
+          </button>
+          <button class="nav-button" onclick="showPage('offerwalls')">
             <i class="fas fa-gem"></i>
             Offerwalls
-          </a>
-          <a href="#" class="nav-button" onclick="showPage('bonus')">
+          </button>
+          <button class="nav-button" onclick="showPage('bonus')">
             <i class="fas fa-gift"></i>
             Bonus
-          </a>
-          <a href="#" class="nav-button" onclick="showPage('cashout')">
+          </button>
+          <button class="nav-button" onclick="showPage('cashout')">
             <i class="fas fa-wallet"></i>
             Cashout
-          </a>
-          <a href="#" class="nav-button" onclick="logout()">
+          </button>
+          <button class="nav-button" onclick="logout()">
             <i class="fas fa-sign-out-alt"></i>
             Logout
-          </a>
+          </button>
         </div>
 
         <!-- 9-Dot Menu Toggle -->
@@ -1412,38 +1273,38 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu">
-      <a href="#" class="menu-item active" onclick="showPage('work'); toggleMenu()">
+      <button class="menu-item" onclick="showPage('work'); toggleMenu()">
         <i class="fas fa-briefcase"></i>
         <span>Tasks</span>
-      </a>
-      <a href="#" class="menu-item" onclick="showPage('offerwalls'); toggleMenu()">
+      </button>
+      <button class="menu-item" onclick="showPage('offerwalls'); toggleMenu()">
         <i class="fas fa-gem"></i>
         <span>Offerwalls</span>
-      </a>
-      <a href="#" class="menu-item" onclick="showPage('bonus'); toggleMenu()">
+      </button>
+      <button class="menu-item" onclick="showPage('bonus'); toggleMenu()">
         <i class="fas fa-gift"></i>
         <span>Bonus Codes</span>
-      </a>
-      <a href="#" class="menu-item" onclick="showPage('cashout'); toggleMenu()">
+      </button>
+      <button class="menu-item" onclick="showPage('cashout'); toggleMenu()">
         <i class="fas fa-wallet"></i>
         <span>Cashout</span>
-      </a>
-      <a href="#" class="menu-item" onclick="showPage('terms'); toggleMenu()">
+      </button>
+      <button class="menu-item" onclick="showPage('terms'); toggleMenu()">
         <i class="fas fa-file-contract"></i>
         <span>Terms</span>
-      </a>
-      <a href="#" class="menu-item" onclick="toggleChat(); toggleMenu()">
+      </button>
+      <button class="menu-item" onclick="toggleChat(); toggleMenu()">
         <i class="fas fa-comments"></i>
         <span>Support</span>
-      </a>
-      <a href="#" class="menu-item" onclick="showAlert('Contact: support@insignia.com'); toggleMenu()">
+      </button>
+      <button class="menu-item" onclick="showAlert('Contact: support@insignia.com'); toggleMenu()">
         <i class="fas fa-question-circle"></i>
         <span>Help</span>
-      </a>
-      <a href="#" class="menu-item" onclick="logout(); toggleMenu()">
+      </button>
+      <button class="menu-item" onclick="logout(); toggleMenu()">
         <i class="fas fa-sign-out-alt"></i>
         <span>Logout</span>
-      </a>
+      </button>
     </div>
 
     <!-- Auth Screens -->
@@ -1510,12 +1371,12 @@
           <p class="auth-subtitle">Enter the 6-digit code sent to your email</p>
           
           <div class="verification-container">
-            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 1)" autocomplete="off">
-            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 2)" autocomplete="off">
-            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 3)" autocomplete="off">
-            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 4)" autocomplete="off">
-            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 5)" autocomplete="off">
-            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 6)" autocomplete="off">
+            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 0)">
+            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 1)">
+            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 2)">
+            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 3)">
+            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 4)">
+            <input type="text" class="code-input" maxlength="1" oninput="moveToNext(this, 5)">
           </div>
           
           <button class="btn" onclick="verifyEmail()">
@@ -1538,7 +1399,7 @@
           <div class="avatar" id="userAvatar">U</div>
           <div class="user-info">
             <h2 class="username" id="displayUsername">User</h2>
-            <span id="userStatus" class="user-status">Premium</span>
+            <span class="user-status" id="userStatus">Premium Member</span>
           </div>
         </div>
 
@@ -1618,6 +1479,10 @@
             
             <div id="iframeContainer" class="hidden">
               <iframe id="offerwallFrame" class="w-full" style="height: 600px; border: none; border-radius: var(--radius);"></iframe>
+              <button class="btn btn-outline mt-4" onclick="closeIframe()">
+                <i class="fas fa-arrow-left"></i>
+                Back to Offerwalls
+              </button>
             </div>
           </div>
 
@@ -1696,33 +1561,16 @@
             </h2>
             
             <div id="termsContent">
-              <div class="work-description">
-                <h3 class="font-semibold mb-3">1. Account Terms</h3>
-                <p>• Users must be at least 18 years old to create an account</p>
-                <p>• One account per person is allowed</p>
-                <p>• You are responsible for maintaining the security of your account</p>
-                
-                <h3 class="font-semibold mb-3 mt-4">2. Earnings & Withdrawals</h3>
-                <p>• Minimum withdrawal: $5.00 USD</p>
-                <p>• Withdrawals are processed within 3-7 business days</p>
-                <p>• All earnings are subject to verification</p>
-                
-                <h3 class="font-semibold mb-3 mt-4">3. Prohibited Activities</h3>
-                <p>• Using automated scripts or bots</p>
-                <p>• Creating multiple accounts</p>
-                <p>• Attempting to cheat the system</p>
-                <p>• Using VPNs or proxy services</p>
-                
-                <h3 class="font-semibold mb-3 mt-4">4. Privacy Policy</h3>
-                <p>• We collect necessary data for account operation</p>
-                <p>• We never share your personal information with third parties</p>
-                <p>• Your data is protected with encryption</p>
-                
-                <h3 class="font-semibold mb-3 mt-4">5. Support</h3>
-                <p>• Contact: support@insignia.com</p>
-                <p>• Response time: 24-48 hours</p>
-                <p>• Live chat available during business hours</p>
-              </div>
+              <h3>Welcome to Insignia Premium Rewards</h3>
+              <p>By using our service, you agree to the following terms:</p>
+              <ul>
+                <li>You must be at least 18 years old to participate</li>
+                <li>One account per person is allowed</li>
+                <li>Fraudulent activities will result in account termination</li>
+                <li>Rewards are subject to approval</li>
+                <li>Minimum cashout: $5.00 USD</li>
+                <li>Processing time: 3-7 business days</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -1738,55 +1586,28 @@
     </footer>
   </div>
 
-  <!-- Enhanced Chat System -->
+  <!-- Chat System -->
   <button id="chatToggle" class="chat-toggle hidden">
     <i class="fas fa-comment-dots"></i>
-    <span class="chat-unread-badge" id="unreadBadge" style="display: none;">0</span>
   </button>
   
   <div id="chatBox" class="chat-box">
     <div class="chat-header">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <i class="fas fa-headset"></i>
-        <div>
-          <div><strong>Premium Support</strong></div>
-          <div class="online-status">
-            <span class="status-dot"></span>
-            <span>Live Support</span>
-          </div>
-        </div>
-      </div>
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <span id="typingIndicator" class="typing-indicator" style="display: none;">
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-        </span>
-        <button class="chat-close" onclick="toggleChat()">×</button>
-      </div>
+      <span><i class="fas fa-headset"></i> Premium Support</span>
+      <button class="chat-close" onclick="toggleChat()">×</button>
     </div>
     
     <div class="chat-messages" id="chatMessages">
       <div class="chat-message other">
         <strong>Insignia Support:</strong> Welcome to Insignia Premium! How can we assist you today?
-        <div class="message-time">Just now</div>
       </div>
     </div>
     
     <div class="chat-input-container">
-      <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." 
-             onkeypress="handleChatInput(event)" autocomplete="off">
-      <div class="chat-actions">
-        <button class="chat-action-btn" onclick="sendEmoji('👍')">
-          <i class="fas fa-thumbs-up"></i>
-        </button>
-        <button class="chat-action-btn" onclick="sendEmoji('❤️')">
-          <i class="fas fa-heart"></i>
-        </button>
-        <button class="chat-action-btn" onclick="sendChatMessage()" id="sendButton">
-          <i class="fas fa-paper-plane"></i>
-        </button>
-      </div>
+      <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
+      <button class="chat-send" onclick="sendChatMessage()">
+        <i class="fas fa-paper-plane"></i>
+      </button>
     </div>
   </div>
 
@@ -1798,384 +1619,27 @@
     </div>
   </div>
 
-  <!-- JavaScript -->
   <script>
-    // Main App State
-    const state = {
-      user: null,
-      currentPage: 'work',
-      menuOpen: false,
-      chatOpen: false,
-      loading: false,
-      pendingUser: null
-    };
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTelvEYce1YEgw8-RDKth6xa_VJGRu2YOTxRMcgTGLuL6IXgO7tFG3xllYW4czAdbEEg/exec";
 
-    // Script URLs - USE THESE EXACT URLs
-    const MAIN_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTelvEYce1YEgw8-RDKth6xa_VJGRu2YOTxRMcgTGLuL6IXgO7tFG3xllYW4czAdbEEg/exec";
-    const CHAT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzAvcV5E2B7DwA_qoNly5atw1lmwhxYqRxOY-uw_xdIfylejFMiSeZdyBSVrBijLONZ/exec";
+    let currentUser = null;
+    let pendingUser = null;
+    let chatInterval = null;
 
-    // Chat System Class - SIMPLIFIED AND WORKING
-    class ChatSystem {
-      constructor() {
-        this.unreadCount = 0;
-        this.lastMessageId = null;
-        this.pollingInterval = null;
-        this.notificationPermission = null;
-        this.isInitialized = false;
-        this.sheetId = "1BiCmOAUpalwQw8HysbShtEYzf3zq3Zxjiy2-eDdU6t0";
-      }
-      
-      async initialize() {
-        if (this.isInitialized) return;
-        
-        // Request notification permission
-        await this.requestNotificationPermission();
-        
-        // Load existing messages
-        await this.loadChatMessages();
-        
-        // Start polling for new messages
-        this.startPolling();
-        
-        // Setup event listeners
-        this.setupEventListeners();
-        
-        this.isInitialized = true;
-        console.log('Chat system initialized');
-      }
-      
-      async requestNotificationPermission() {
-        if (!("Notification" in window)) {
-          console.log("This browser does not support notifications");
-          return;
-        }
-        
-        try {
-          if (Notification.permission === "default") {
-            this.notificationPermission = await Notification.requestPermission();
-          } else {
-            this.notificationPermission = Notification.permission;
-          }
-          console.log("Notification permission:", this.notificationPermission);
-        } catch (error) {
-          console.error("Error requesting notification permission:", error);
-        }
-      }
-      
-      setupEventListeners() {
-        // Chat toggle
-        document.getElementById('chatToggle').addEventListener('click', () => this.toggleChat());
-        
-        // Mobile notification banner
-        document.getElementById('mobileNotificationBanner').addEventListener('click', () => {
-          this.toggleChat();
-          this.hideMobileBanner();
-        });
-      }
-      
-      async loadChatMessages() {
-        if (!state.user) return;
-        
-        try {
-          const response = await fetch(`${CHAT_SCRIPT_URL}?action=getChatMessages&username=${encodeURIComponent(state.user.username)}&t=${Date.now()}`);
-          const data = await response.json();
-          
-          if (data.status === 'success') {
-            this.renderMessages(data.messages || []);
-            this.updateUnreadCount(data.unreadCount || 0);
-            
-            // Store last message ID
-            if (data.messages && data.messages.length > 0) {
-              this.lastMessageId = data.messages[data.messages.length - 1].id;
-            }
-          } else {
-            console.error('Failed to load messages:', data.message);
-          }
-        } catch (error) {
-          console.error('Error loading chat messages:', error);
-          this.renderMessages([]);
-        }
-      }
-      
-      renderMessages(messages) {
-        const container = document.getElementById('chatMessages');
-        
-        if (!messages || messages.length === 0) {
-          container.innerHTML = `
-            <div class="chat-message other">
-              <strong>Insignia Support:</strong> Welcome! Start the conversation...
-              <div class="message-time">Just now</div>
-            </div>
-          `;
-          return;
-        }
-        
-        container.innerHTML = messages.map(msg => {
-          const isOwn = msg.sender === state.user.username;
-          const time = new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-          const senderName = isOwn ? 'You' : (msg.sender === 'support' ? 'Insignia Support' : msg.sender);
-          
-          return `
-            <div class="chat-message ${isOwn ? 'own' : 'other'}">
-              <strong>${senderName}:</strong> ${msg.message}
-              <div class="message-time">${time}</div>
-            </div>
-          `;
-        }).join('');
-        
-        container.scrollTop = container.scrollHeight;
-      }
-      
-      updateUnreadCount(count) {
-        this.unreadCount = count;
-        const badge = document.getElementById('unreadBadge');
-        
-        if (count > 0) {
-          badge.textContent = count > 99 ? '99+' : count;
-          badge.style.display = 'flex';
-          
-          if (!document.getElementById('chatBox').classList.contains('active')) {
-            document.title = `(${count}) New Message! - Insignia`;
-            this.showNotification('NEW MESSAGE ALERT!', `You have ${count} unread message${count > 1 ? 's' : ''}`);
-          }
-        } else {
-          badge.style.display = 'none';
-          if (!document.getElementById('chatBox').classList.contains('active')) {
-            document.title = 'Insignia - Premium Rewards';
-          }
-        }
-      }
-      
-      async sendMessage(message = null) {
-        if (!state.user) {
-          console.error('No user logged in');
-          return;
-        }
-        
-        const input = document.getElementById('chatInput');
-        const msg = message || input.value.trim();
-        
-        if (!msg) {
-          console.log('Empty message, not sending');
-          return;
-        }
-        
-        console.log('Sending message:', msg, 'from user:', state.user.username);
-        
-        // Clear input immediately
-        if (!message) {
-          input.value = '';
-        }
-        
-        // Show message immediately in chat
-        const container = document.getElementById('chatMessages');
-        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        container.innerHTML += `
-          <div class="chat-message own">
-            <strong>You:</strong> ${msg}
-            <div class="message-time">${time} (Sending...)</div>
-          </div>
-        `;
-        container.scrollTop = container.scrollHeight;
-        
-        // Send to server using FormData (POST)
-        try {
-          const formData = new FormData();
-          formData.append('action', 'sendMessage');
-          formData.append('sender', state.user.username);
-          formData.append('message', msg);
-          formData.append('recipient', 'support');
-          formData.append('sheetId', this.sheetId);
-          
-          console.log('Sending FormData:', {
-            action: 'sendMessage',
-            sender: state.user.username,
-            message: msg,
-            recipient: 'support',
-            sheetId: this.sheetId
-          });
-          
-          const response = await fetch(CHAT_SCRIPT_URL, { 
-            method: 'POST', 
-            body: formData 
-          });
-          
-          const data = await response.json();
-          console.log('Send response:', data);
-          
-          if (data.status === 'success') {
-            // Update message status
-            const lastMessage = container.querySelector('.chat-message.own:last-child .message-time');
-            if (lastMessage) {
-              lastMessage.textContent = time;
-            }
-            
-            // Reload messages
-            await this.loadChatMessages();
-            
-            // Show success notification
-            this.showDesktopNotification('Message Sent!', 'Your message was delivered successfully');
-          } else {
-            console.error('Failed to send message:', data.message);
-            showAlert('Failed to send message: ' + data.message);
-          }
-        } catch (error) {
-          console.error('Error sending message:', error);
-          showAlert('Network error. Please try again.');
-        }
-      }
-      
-      startPolling() {
-        if (this.pollingInterval) {
-          clearInterval(this.pollingInterval);
-        }
-        
-        this.pollingInterval = setInterval(async () => {
-          if (state.user) {
-            await this.checkNewMessages();
-          }
-        }, 5000);
-      }
-      
-      async checkNewMessages() {
-        try {
-          const response = await fetch(`${CHAT_SCRIPT_URL}?action=checkNewMessages&username=${encodeURIComponent(state.user.username)}&lastId=${this.lastMessageId || ''}&t=${Date.now()}`);
-          const data = await response.json();
-          
-          if (data.status === 'success' && data.newMessages > 0) {
-            console.log('New messages found:', data.newMessages);
-            await this.loadChatMessages();
-            
-            if (document.getElementById('chatBox').classList.contains('active')) {
-              await this.markAsRead();
-            }
-          }
-        } catch (error) {
-          console.error('Error checking new messages:', error);
-        }
-      }
-      
-      async markAsRead() {
-        try {
-          await fetch(`${CHAT_SCRIPT_URL}?action=markAsRead&username=${encodeURIComponent(state.user.username)}&t=${Date.now()}`);
-          this.updateUnreadCount(0);
-        } catch (error) {
-          console.error('Error marking as read:', error);
-        }
-      }
-      
-      showNotification(title, body) {
-        // Show mobile banner
-        if (window.innerWidth <= 768) {
-          this.showMobileBanner(title);
-        }
-        
-        // Show desktop notification if allowed
-        if (this.notificationPermission === "granted") {
-          this.showDesktopNotification(title, body);
-        } else {
-          this.showCustomNotification(title, body);
-        }
-      }
-      
-      showMobileBanner(title) {
-        const banner = document.getElementById('mobileNotificationBanner');
-        banner.innerHTML = `<i class="fas fa-comment-alt"></i> ${title}`;
-        banner.style.display = 'block';
-        
-        setTimeout(() => this.hideMobileBanner(), 5000);
-      }
-      
-      hideMobileBanner() {
-        const banner = document.getElementById('mobileNotificationBanner');
-        banner.style.display = 'none';
-      }
-      
-      showDesktopNotification(title, body) {
-        try {
-          const notification = new Notification(title, {
-            body: body,
-            icon: 'https://cdn-icons-png.flaticon.com/512/733/733585.png',
-            tag: 'insignia-chat'
-          });
-          
-          notification.onclick = () => {
-            window.focus();
-            this.toggleChat();
-            notification.close();
-          };
-          
-          setTimeout(() => notification.close(), 10000);
-        } catch (error) {
-          console.error('Error showing desktop notification:', error);
-        }
-      }
-      
-      showCustomNotification(title, body) {
-        const notificationContainer = document.getElementById('notificationContainer');
-        const notificationId = 'notification-' + Date.now();
-        
-        const notification = document.createElement('div');
-        notification.className = 'notification';
-        notification.id = notificationId;
-        notification.innerHTML = `
-          <div class="notification-icon">
-            <i class="fas fa-comment-alt"></i>
-          </div>
-          <div>
-            <strong>${title}</strong><br>
-            <span>${body}</span>
-          </div>
-        `;
-        
-        notification.addEventListener('click', () => {
-          this.toggleChat();
-          notification.remove();
-        });
-        
-        notificationContainer.appendChild(notification);
-        
-        setTimeout(() => {
-          const el = document.getElementById(notificationId);
-          if (el) el.remove();
-        }, 5000);
-      }
-      
-      toggleChat() {
-        const chatBox = document.getElementById('chatBox');
-        const isActive = chatBox.classList.toggle('active');
-        
-        if (isActive) {
-          this.markAsRead();
-          document.getElementById('chatInput').focus();
-        }
-      }
-      
-      cleanup() {
-        if (this.pollingInterval) {
-          clearInterval(this.pollingInterval);
-          this.pollingInterval = null;
-        }
-        this.isInitialized = false;
-      }
-    }
-
-    // Global chat instance
-    let chatSystem = null;
-
-    // Initialize app
+    // Initialize the app
     async function init() {
       console.log('🚀 Initializing Insignia...');
       
       try {
-        const response = await fetch(MAIN_SCRIPT_URL + '?action=test&t=' + Date.now());
-        const data = await response.json();
+        // Test connection to Google Apps Script
+        const testResponse = await fetch(SCRIPT_URL + '?action=test');
+        const testData = await testResponse.json();
         
-        if (data.status === 'success') {
-          console.log('✅ Connection successful');
+        if (testData.status === 'success') {
+          console.log('✅ Connection test successful');
           
           // Load configuration
-          const configResponse = await fetch(MAIN_SCRIPT_URL + '?action=getConfig&t=' + Date.now());
+          const configResponse = await fetch(SCRIPT_URL + '?action=getConfig');
           const config = await configResponse.json();
           
           if (config.status === 'success') {
@@ -2188,7 +1652,7 @@
             document.getElementById('app').classList.remove('hidden');
             
             // Try auto-login
-            const saved = localStorage.getItem('insignia_user');
+            const saved = localStorage.getItem('quizbux_user');
             if (saved) {
               const userData = JSON.parse(saved);
               restoreSession(userData.username);
@@ -2196,31 +1660,49 @@
           }, 1000);
           
         } else {
-          throw new Error('Connection failed');
+          throw new Error('Connection test failed: ' + testData.message);
         }
+        
       } catch (error) {
-        console.error('❌ Initialization error:', error);
+        console.error('❌ Initialization failed:', error);
+        showAlert('Failed to connect to server. Please check your internet connection and try again.');
         document.getElementById('loadingScreen').classList.add('hidden');
         document.getElementById('app').classList.remove('hidden');
-        showAlert('Connection error. Please check your internet.');
       }
     }
 
+    // Apply configuration from Google Sheets
     function applyConfig(config) {
-      if (config.texts && config.texts.terms) {
-        document.getElementById('termsContent').innerHTML = config.texts.terms;
+      console.log('Applying config:', config);
+      
+      // Update texts
+      if (config.texts) {
+        if (config.texts.welcome_message) {
+          document.querySelector('#loginCard p').textContent = config.texts.welcome_message;
+          document.querySelector('#signupCard p').textContent = config.texts.welcome_message;
+        }
+        
+        if (config.texts.terms) {
+          document.getElementById('termsContent').innerHTML = config.texts.terms;
+        }
       }
       
+      // Update app name
       if (config.app_name) {
-        document.title = config.app_name;
+        document.title = config.app_name + ' - Premium Rewards';
       }
       
+      // Update logo
       if (config.logo) {
-        document.querySelector('.logo-icon').innerHTML = `<img src="${config.logo}" alt="Logo" style="width: 24px; height: 24px;">`;
+        const logoIcon = document.querySelector('.logo-icon i');
+        logoIcon.className = '';
+        logoIcon.innerHTML = `<img src="${config.logo}" alt="Logo" style="width: 24px; height: 24px;">`;
       }
       
-      // Load offers
+      // Update offers
       const select = document.getElementById('rewardSelect');
+      select.innerHTML = '<option value="">Select reward...</option>';
+      
       if (config.offers && config.offers.length > 0) {
         config.offers.forEach(offer => {
           const option = document.createElement('option');
@@ -2249,12 +1731,12 @@
       document.getElementById('signupCard').classList.add('hidden');
       document.getElementById('verifyCard').classList.remove('hidden');
       document.querySelectorAll('.code-input').forEach(input => input.value = '');
-      document.querySelector('.code-input').focus();
+      document.querySelectorAll('.code-input')[0].focus();
     }
 
-    function moveToNext(input, nextIndex) {
+    function moveToNext(input, index) {
       if (input.value.length === 1) {
-        const nextInput = document.querySelectorAll('.code-input')[nextIndex];
+        const nextInput = document.querySelectorAll('.code-input')[index + 1];
         if (nextInput) nextInput.focus();
       }
     }
@@ -2283,11 +1765,11 @@
       formData.append('password', password);
 
       try {
-        const response = await fetch(MAIN_SCRIPT_URL, { method: 'POST', body: formData });
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
         const data = await response.json();
 
         if (data.status === 'success') {
-          state.pendingUser = { username, email, password };
+          pendingUser = { username, email, password };
           showVerification();
           showAlert('Verification code sent to your email!');
         } else {
@@ -2309,19 +1791,19 @@
 
       const formData = new FormData();
       formData.append('action', 'verifyEmail');
-      formData.append('username', state.pendingUser.username);
-      formData.append('email', state.pendingUser.email);
-      formData.append('password', state.pendingUser.password);
+      formData.append('username', pendingUser.username);
+      formData.append('email', pendingUser.email);
+      formData.append('password', pendingUser.password);
       formData.append('code', code);
 
       try {
-        const response = await fetch(MAIN_SCRIPT_URL, { method: 'POST', body: formData });
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
         const data = await response.json();
 
         if (data.status === 'success') {
           showAlert('Account verified successfully! You can now login.');
           showLogin();
-          state.pendingUser = null;
+          pendingUser = null;
         } else {
           showAlert(data.message || 'Verification failed');
         }
@@ -2332,15 +1814,15 @@
     }
 
     async function resendCode() {
-      if (!state.pendingUser) return;
+      if (!pendingUser) return;
 
       const formData = new FormData();
       formData.append('action', 'resendCode');
-      formData.append('username', state.pendingUser.username);
-      formData.append('email', state.pendingUser.email);
+      formData.append('username', pendingUser.username);
+      formData.append('email', pendingUser.email);
 
       try {
-        const response = await fetch(MAIN_SCRIPT_URL, { method: 'POST', body: formData });
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
         const data = await response.json();
 
         if (data.status === 'success') {
@@ -2368,12 +1850,12 @@
       formData.append('password', password);
 
       try {
-        const response = await fetch(MAIN_SCRIPT_URL, { method: 'POST', body: formData });
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
         const data = await response.json();
 
         if (data.status === 'success') {
-          state.user = data.user;
-          localStorage.setItem('insignia_user', JSON.stringify({ username }));
+          currentUser = data.user;
+          localStorage.setItem('quizbux_user', JSON.stringify({ username }));
           showDashboard();
           showAlert('Login successful! Welcome to Insignia.');
         } else {
@@ -2381,116 +1863,157 @@
         }
       } catch (error) {
         console.error('Login error:', error);
-        showAlert('Network error. Please try again.');
+        showAlert('Network error. Please check your connection and try again.');
       }
     }
 
     async function restoreSession(username) {
       try {
-        const response = await fetch(MAIN_SCRIPT_URL + '?action=getUserData&username=' + encodeURIComponent(username) + '&t=' + Date.now());
+        const response = await fetch(SCRIPT_URL + '?action=getUserData&username=' + encodeURIComponent(username));
         const data = await response.json();
         
         if (data.status === 'success') {
-          state.user = data.user;
+          currentUser = data.user;
           showDashboard();
         } else {
-          localStorage.removeItem('insignia_user');
+          localStorage.removeItem('quizbux_user');
         }
       } catch (error) {
         console.error('Restore session error:', error);
-        localStorage.removeItem('insignia_user');
+        localStorage.removeItem('quizbux_user');
       }
     }
 
-    async function showDashboard() {
+    function showDashboard() {
       document.getElementById('authScreens').classList.add('hidden');
       document.getElementById('dashboard').classList.remove('hidden');
       document.getElementById('chatToggle').classList.remove('hidden');
 
-      // Update user info
-      document.getElementById('displayUsername').textContent = state.user.username;
-      document.getElementById('userAvatar').textContent = state.user.username[0].toUpperCase();
-      document.getElementById('balanceValue').textContent = Number(state.user.balance).toLocaleString();
-      document.getElementById('usdBalanceValue').textContent = '$' + Number(state.user.balanceUSD).toFixed(4);
-      document.getElementById('bonusPointsValue').textContent = Number(state.user.bonusPoints || 0).toLocaleString();
+      document.getElementById('displayUsername').textContent = currentUser.username;
+      document.getElementById('userAvatar').textContent = currentUser.username[0].toUpperCase();
+      document.getElementById('balanceValue').textContent = Number(currentUser.balance || 0).toLocaleString();
+      document.getElementById('usdBalanceValue').textContent = '$' + Number(currentUser.balanceUSD || 0).toFixed(4);
+      document.getElementById('bonusPointsValue').textContent = Number(currentUser.bonusPoints || 0).toLocaleString();
 
-      // Initialize chat system
-      if (!chatSystem) {
-        chatSystem = new ChatSystem();
-      }
-      await chatSystem.initialize();
-
-      // Show work page
       showPage('work');
     }
 
-    function showPage(page) {
-      state.currentPage = page;
-      
+    function showPage(id) {
+      // Hide all content pages
       document.querySelectorAll('.content-page').forEach(p => p.classList.add('hidden'));
-      document.getElementById(page).classList.remove('hidden');
       
+      // Show selected page
+      document.getElementById(id).classList.remove('hidden');
+      
+      // Update active tab
       document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.tab-button').forEach(btn => {
-        if (btn.onclick && btn.onclick.toString().includes(`'${page}'`)) {
+        if (btn.onclick && btn.onclick.toString().includes(`'${id}'`)) {
           btn.classList.add('active');
         }
       });
       
-      if (page === 'offerwalls') loadOfferwalls();
-      if (page === 'bonus') loadBonusCodes();
-      if (page === 'cashout') loadCashoutHistory();
+      // Load page-specific content
+      if (id === 'offerwalls') loadOfferwalls();
+      if (id === 'cashout') loadCashoutHistory();
+      if (id === 'bonus') loadBonusCodes();
     }
 
     function toggleMenu() {
-      state.menuOpen = !state.menuOpen;
       document.querySelector('.menu-toggle').classList.toggle('active');
       document.querySelector('.mobile-menu').classList.toggle('active');
       document.querySelector('.menu-overlay').classList.toggle('active');
     }
 
-    // Chat functions
-    function handleChatInput(event) {
-      if (event.key === 'Enter') {
-        sendChatMessage();
+    // Offerwalls functions
+    async function loadOfferwalls() {
+      if (!currentUser) return;
+      
+      try {
+        const response = await fetch(SCRIPT_URL + '?action=getOfferwalls&username=' + currentUser.username);
+        const data = await response.json();
+        const container = document.getElementById('offerwallList');
+        
+        if (data.status === 'success' && data.offerwalls && data.offerwalls.length > 0) {
+          container.innerHTML = data.offerwalls.map(wall => {
+            const hasEnoughPoints = (currentUser.balance || 0) >= (wall.pointsRequired || 0);
+            const isUnlocked = hasEnoughPoints && wall.status === 'active';
+            
+            return `
+              <div class="offerwall-card">
+                <div class="offerwall-header">
+                  <div class="offerwall-icon">
+                    <i class="fas fa-gem"></i>
+                  </div>
+                  <div style="flex: 1;">
+                    <h3 class="font-semibold">${wall.name}</h3>
+                    <p class="text-sm text-gray">Complete offers to earn rewards</p>
+                  </div>
+                  <span class="offerwall-status ${isUnlocked ? 'unlocked' : 'locked'}">
+                    ${isUnlocked ? 'Unlocked' : 'Locked'}
+                  </span>
+                </div>
+                <div class="flex gap-2">
+                  <button class="btn ${!isUnlocked ? 'btn-outline' : ''}" 
+                          onclick="${isUnlocked ? `openOfferwall('${wall.id}', '${wall.url}')` : ''}" 
+                          ${!isUnlocked ? 'disabled' : ''}>
+                    <i class="fas fa-play"></i>
+                    Start Earning
+                  </button>
+                  <button class="btn btn-outline" 
+                          onclick="window.open('${wall.url}', '_blank')" 
+                          ${!isUnlocked ? 'disabled' : ''}>
+                    <i class="fas fa-external-link-alt"></i>
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
+        } else {
+          container.innerHTML = '<p>No active offerwalls at the moment</p>';
+        }
+      } catch (error) {
+        console.error('Load offerwalls error:', error);
+        container.innerHTML = '<p>Error loading offerwalls</p>';
       }
     }
 
-    function sendEmoji(emoji) {
-      if (chatSystem) {
-        chatSystem.sendMessage(emoji);
-      }
+    function openOfferwall(id, url) {
+      document.getElementById('offerwallList').classList.add('hidden');
+      document.getElementById('iframeContainer').classList.remove('hidden');
+      document.getElementById('offerwallFrame').src = url;
     }
 
-    function sendChatMessage() {
-      if (chatSystem) {
-        chatSystem.sendMessage();
-      }
-    }
-
-    function toggleChat() {
-      if (chatSystem) {
-        chatSystem.toggleChat();
-      }
+    function closeIframe() {
+      document.getElementById('offerwallList').classList.remove('hidden');
+      document.getElementById('iframeContainer').classList.add('hidden');
+      document.getElementById('offerwallFrame').src = '';
     }
 
     // Work submission
     async function submitWork() {
-      if (!state.user) return;
+      if (!currentUser) return;
 
       const text = document.getElementById('workInput').value.trim();
       if (!text) return showAlert('Please describe the questions you answered');
 
       const formData = new FormData();
       formData.append('action', 'submitWork');
-      formData.append('username', state.user.username);
+      formData.append('username', currentUser.username);
       formData.append('submission', text);
 
       try {
-        const response = await fetch(MAIN_SCRIPT_URL, { method: 'POST', body: formData });
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
         const data = await response.json();
         showAlert(data.message);
         document.getElementById('workInput').value = '';
+        
+        // Update user data
+        if (data.userData) {
+          currentUser = data.userData;
+          document.getElementById('balanceValue').textContent = Number(currentUser.balance || 0).toLocaleString();
+          document.getElementById('usdBalanceValue').textContent = '$' + Number(currentUser.balanceUSD || 0).toFixed(4);
+        }
       } catch (error) {
         console.error('Submit work error:', error);
         showAlert('Network error. Please try again.');
@@ -2503,7 +2026,7 @@
     };
 
     async function submitCashout() {
-      if (!state.user) return;
+      if (!currentUser) return;
 
       const amount = document.getElementById('rewardSelect').value;
       if (!amount) return showAlert('Please select a reward');
@@ -2512,12 +2035,12 @@
 
       const formData = new FormData();
       formData.append('action', 'submitCashout');
-      formData.append('username', state.user.username);
+      formData.append('username', currentUser.username);
       formData.append('reward', reward);
       formData.append('amount', amount);
 
       try {
-        const response = await fetch(MAIN_SCRIPT_URL, { method: 'POST', body: formData });
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
         const data = await response.json();
         showAlert(data.message);
 
@@ -2531,10 +2054,10 @@
     }
 
     async function loadCashoutHistory() {
-      if (!state.user) return;
+      if (!currentUser) return;
       
       try {
-        const response = await fetch(MAIN_SCRIPT_URL + '?action=getCashoutHistory&username=' + state.user.username + '&t=' + Date.now());
+        const response = await fetch(SCRIPT_URL + '?action=getCashoutHistory&username=' + currentUser.username);
         const data = await response.json();
         const container = document.getElementById('cashoutHistory');
         
@@ -2563,75 +2086,17 @@
       }
     }
 
-    // Offerwalls functions
-    async function loadOfferwalls() {
-      if (!state.user) return;
-      
-      try {
-        const response = await fetch(MAIN_SCRIPT_URL + '?action=getOfferwalls&username=' + state.user.username + '&t=' + Date.now());
-        const data = await response.json();
-        const container = document.getElementById('offerwallList');
-        
-        if (data.status === 'success' && data.offerwalls && data.offerwalls.length > 0) {
-          container.innerHTML = data.offerwalls.map(wall => {
-            const hasEnoughPoints = state.user.balance >= (wall.pointsRequired || 0);
-            const isUnlocked = hasEnoughPoints && (wall.status === 'active');
-            
-            return `
-              <div class="offerwall-card">
-                <div class="offerwall-header">
-                  <div class="offerwall-icon">
-                    <i class="fas fa-gem"></i>
-                  </div>
-                  <div style="flex: 1;">
-                    <h3 class="font-semibold">${wall.name}</h3>
-                    <p class="text-sm text-gray">Complete offers to earn rewards</p>
-                  </div>
-                  <span class="offerwall-status ${isUnlocked ? 'unlocked' : 'locked'}">
-                    ${isUnlocked ? 'Unlocked' : 'Locked'}
-                  </span>
-                </div>
-                <div class="flex gap-2">
-                  <button class="btn ${!isUnlocked ? 'btn-outline' : ''}" 
-                          onclick="${isUnlocked ? `openOfferwall('${wall.id}', '${wall.url}')` : 'showAlert(\'Unlock more offers by earning points!\')'}" 
-                          ${!isUnlocked ? 'disabled' : ''}>
-                    <i class="fas fa-play"></i>
-                    Start Earning
-                  </button>
-                  <button class="btn btn-outline" 
-                          onclick="window.open('${wall.url}', '_blank')" 
-                          ${!isUnlocked ? 'disabled' : ''}>
-                    <i class="fas fa-external-link-alt"></i>
-                  </button>
-                </div>
-              </div>
-            `;
-          }).join('');
-        } else {
-          container.innerHTML = '<p>No active offerwalls at the moment</p>';
-        }
-      } catch (error) {
-        console.error('Load offerwalls error:', error);
-        container.innerHTML = '<p>Error loading offerwalls</p>';
-      }
-    }
-
-    function openOfferwall(id, url) {
-      document.getElementById('offerwallList').classList.add('hidden');
-      document.getElementById('iframeContainer').classList.remove('hidden');
-      document.getElementById('offerwallFrame').src = url;
-      showAlert('Offerwall opened! Complete offers to earn rewards.');
-    }
-
     // Bonus codes functions
     async function loadBonusCodes() {
-      if (!state.user) return;
+      if (!currentUser) return;
       
       try {
-        const availableResponse = await fetch(MAIN_SCRIPT_URL + '?action=getBonusCodes&username=' + state.user.username + '&t=' + Date.now());
+        // Load available codes
+        const availableResponse = await fetch(SCRIPT_URL + '?action=getBonusCodes&username=' + currentUser.username);
         const availableData = await availableResponse.json();
         
-        const historyResponse = await fetch(MAIN_SCRIPT_URL + '?action=getUserBonusHistory&username=' + state.user.username + '&t=' + Date.now());
+        // Load history
+        const historyResponse = await fetch(SCRIPT_URL + '?action=getUserBonusHistory&username=' + currentUser.username);
         const historyData = await historyResponse.json();
         
         updateAvailableCodes(availableData);
@@ -2674,7 +2139,7 @@
     }
 
     async function redeemBonusCode() {
-      if (!state.user) return;
+      if (!currentUser) return;
       
       const bonusCode = document.getElementById('bonusCodeInput').value.trim();
       if (!bonusCode) {
@@ -2683,24 +2148,26 @@
 
       const formData = new FormData();
       formData.append('action', 'redeemBonusCode');
-      formData.append('username', state.user.username);
+      formData.append('username', currentUser.username);
       formData.append('bonusCode', bonusCode);
 
       try {
-        const response = await fetch(MAIN_SCRIPT_URL, { method: 'POST', body: formData });
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
         const data = await response.json();
 
         if (data.status === 'success') {
           showAlert(data.message);
           document.getElementById('bonusCodeInput').value = '';
           
+          // Update user data
           if (data.userData) {
-            state.user = data.userData;
-            document.getElementById('balanceValue').textContent = Number(state.user.balance).toLocaleString();
-            document.getElementById('usdBalanceValue').textContent = '$' + Number(state.user.balanceUSD).toFixed(4);
-            document.getElementById('bonusPointsValue').textContent = Number(state.user.bonusPoints || 0).toLocaleString();
+            currentUser = data.userData;
+            document.getElementById('balanceValue').textContent = Number(currentUser.balance || 0).toLocaleString();
+            document.getElementById('usdBalanceValue').textContent = '$' + Number(currentUser.balanceUSD || 0).toFixed(4);
+            document.getElementById('bonusPointsValue').textContent = Number(currentUser.bonusPoints || 0).toLocaleString();
           }
           
+          // Reload bonus codes
           loadBonusCodes();
         } else {
           showAlert(data.message || 'Failed to redeem bonus code');
@@ -2708,6 +2175,67 @@
       } catch (error) {
         console.error('Redeem bonus error:', error);
         showAlert('Network error. Please try again.');
+      }
+    }
+
+    // Handle Enter key in bonus code input
+    document.getElementById('bonusCodeInput').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        redeemBonusCode();
+      }
+    });
+
+    // Chat functions
+    function toggleChat() {
+      document.getElementById('chatBox').classList.toggle('active');
+    }
+
+    function handleChatInput(event) {
+      if (event.key === 'Enter') {
+        sendChatMessage();
+      }
+    }
+
+    async function sendChatMessage() {
+      if (!currentUser) return;
+
+      const input = document.getElementById('chatInput');
+      const message = input.value.trim();
+      
+      if (!message) return;
+      
+      const formData = new FormData();
+      formData.append('action', 'sendChatMessage');
+      formData.append('username', currentUser.username);
+      formData.append('message', message);
+
+      try {
+        await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+        input.value = '';
+        loadChatMessages();
+      } catch (error) {
+        console.error('Chat error:', error);
+      }
+    }
+
+    async function loadChatMessages() {
+      if (!currentUser) return;
+      
+      try {
+        const response = await fetch(SCRIPT_URL + '?action=getChatMessages');
+        const data = await response.json();
+        const container = document.getElementById('chatMessages');
+        
+        if (data.status === 'success') {
+          container.innerHTML = data.messages.map(msg => `
+            <div class="chat-message ${msg.username === currentUser.username ? 'own' : 'other'}">
+              <strong>${msg.username}:</strong> ${msg.message}
+            </div>
+          `).join('');
+          container.scrollTop = container.scrollHeight;
+        }
+      } catch (error) {
+        console.error('Load chat error:', error);
       }
     }
 
@@ -2722,12 +2250,8 @@
     }
 
     function logout() {
-      if (chatSystem) {
-        chatSystem.cleanup();
-        chatSystem = null;
-      }
-      localStorage.removeItem('insignia_user');
-      state.user = null;
+      localStorage.removeItem('quizbux_user');
+      if (chatInterval) clearInterval(chatInterval);
       location.reload();
     }
 
