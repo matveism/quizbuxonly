@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 
 // 🔹 Paste your Discord bot token here
-const BOT_TOKEN = "YOUR_BOT_TOKEN_HERE";
+const BOT_TOKEN = "1449255151054487674";
 
 // 🔹 Google Apps Script Web App URL
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbwz7EmU9e7wPdBFD9de7ZdoCh1bmh2mLZuxxGoaCG_H5tQ4QxdAr9UEehaIS6AuqNiw/exec";
